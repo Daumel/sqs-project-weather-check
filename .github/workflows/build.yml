@@ -1,15 +1,18 @@
 name: Build
 
-on:
 
+on:
   workflow_dispatch:
-    
+
   push:
-  
+
+
+env:
+  CI: false
+
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
