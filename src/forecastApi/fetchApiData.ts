@@ -11,11 +11,11 @@ export async function fetchSearchOptions(
     const searchOptionsUrl = `${BASE_URL}/geo/1.0/direct?q=${searchTerm.trim()}&limit=5&lang=en&appid=${API_KEY}`;
     await axios
         .get<ISearchOption[]>(searchOptionsUrl)
-        .then((res) => res.data)
-        .then((data) => {
+        .then(res => res.data)
+        .then(data => {
             setSearchOptions(data);
         })
-        .catch((error) => {
+        .catch(error => {
             if (axios.isAxiosError(error)) {
                 console.log(error.status);
                 console.log(error.response);
@@ -29,11 +29,11 @@ export async function fetchForecast(searchOption: ISearchOption, setForecast: (f
     const forecastUrl = `${BASE_URL}/data/2.5/weather?lat=${searchOption.lat}&lon=${searchOption.lon}&units=metric&appid=${API_KEY}`;
     await axios
         .get<IForecast>(forecastUrl)
-        .then((res) => res.data)
-        .then((data) => {
+        .then(res => res.data)
+        .then(data => {
             setForecast(data);
         })
-        .catch((error) => {
+        .catch(error => {
             if (axios.isAxiosError(error)) {
                 console.log(error.status);
                 console.log(error.response);

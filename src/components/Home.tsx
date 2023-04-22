@@ -1,8 +1,8 @@
-import {IForecast} from "@/src/interfaces";
-import {useEffect, useState} from "react";
-import SearchWeather from "@/src/components/SearchWeather";
-import Forecast from "@/src/components/Forecast";
-import {createWeatherCheck} from "@/src/persistence/weatherCheck";
+import { IForecast } from '@/src/interfaces';
+import { useEffect, useState } from 'react';
+import SearchWeather from '@/src/components/SearchWeather';
+import Forecast from '@/src/components/Forecast';
+import { createWeatherCheck } from '@/src/persistence/weatherCheck';
 
 const Home = (): JSX.Element => {
     const [forecast, setForecast] = useState<IForecast | null>(null);
@@ -16,7 +16,7 @@ const Home = (): JSX.Element => {
     return (
         <div>
             <h1>Weather Check</h1>
-            <main>{forecast ? <Forecast forecast={forecast}/> : <SearchWeather setForecast={setForecast}/>}</main>
+            <main>{forecast ? <Forecast forecast={forecast} /> : <SearchWeather setForecast={setForecast} />}</main>
         </div>
     );
 };

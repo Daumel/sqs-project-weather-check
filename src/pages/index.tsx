@@ -1,12 +1,12 @@
 import Head from 'next/head';
-import Home from "@/src/components/Home";
+import Home from '@/src/components/Home';
 
 const Root = (): JSX.Element => (
     <>
         <Head>
             <title>Weather Check</title>
-            <meta name="description" content="Weather Check Application"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <meta name="description" content="Weather Check Application" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <Home></Home>
     </>

@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const POST_REQUEST_URL = "/api/weather-check";
+const POST_REQUEST_URL = '/api/weather-check';
 
 export async function createWeatherCheck(name: string, temp: number) {
     await axios
@@ -8,7 +8,7 @@ export async function createWeatherCheck(name: string, temp: number) {
             name,
             temp,
         })
-        .catch((error) => {
+        .catch(error => {
             if (axios.isAxiosError(error)) {
                 console.log(error.status);
                 console.log(error.response);
