@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { ISearchOption, IForecast } from '../interfaces';
+import { ISearchOption, IForecast } from '@/src/interfaces';
 
 const BASE_URL = 'http://api.openweathermap.org';
-const API_KEY = process.env.REACT_APP_API_KEY ?? '';
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY ?? '';
 
 export async function fetchSearchOptions(
     searchTerm: string,
