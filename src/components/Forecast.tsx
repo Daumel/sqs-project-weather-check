@@ -1,4 +1,4 @@
-import { IForecast } from '../interfaces/index';
+import { IForecast } from '@/src/interfaces';
 
 type Props = {
     forecast: IForecast;

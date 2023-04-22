@@ -1,4 +1,4 @@
-import { ISearchOption } from '../interfaces/index';
+import { ISearchOption } from '@/src/interfaces';
 
 type Props = {
     searchOptions: ISearchOption[] | null;

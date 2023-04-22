@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent } from 'react';
-import { IForecast, ISearchOption } from '../interfaces/index';
+import { IForecast, ISearchOption } from '@/src/interfaces';
 import Suggestions from './Suggestions';
-import { fetchSearchOptions, fetchForecast } from '../api/ForecastAPI';
+import { fetchSearchOptions, fetchForecast } from '@/src/forecastApi/fetchApiData';
 
 type Props = {
     setForecast: (option: IForecast) => void;
@@ -22,7 +22,9 @@ const SearchWeather = ({ setForecast }: Props): JSX.Element => {
     };
 
     const onSubmit = () => {
-        if (!city) return;
+        if (!city) {
+            return;
+        }
 
         void fetchForecast(city, setForecast);
     };
@@ -38,7 +40,6 @@ const SearchWeather = ({ setForecast }: Props): JSX.Element => {
         <section>
             <input type="text" value={searchTerm} onChange={onInputChange} />
             <button onClick={onSubmit}>Search</button>
-
             <Suggestions searchOptions={searchOptions} setCity={setCity} />
         </section>
     );
