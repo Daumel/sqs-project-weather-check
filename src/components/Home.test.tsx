@@ -20,28 +20,28 @@ describe('Home', () => {
 
     it('renders the title', () => {
         render(<Home />);
-        const title = screen.getByText(/Weather Check/i);
-        expect(title).toBeInTheDocument();
+        const titleElement = screen.getByText(/weather check/i);
+        expect(titleElement).toBeInTheDocument();
     });
 
     it('renders the SearchWeather component if forecast is null', () => {
         render(<Home />);
-        const searchWeather = screen.getByText(/Mocked SearchWeather/i);
+        const searchWeatherComponent = screen.getByText('Mocked SearchWeather');
 
-        expect(searchWeather).toBeInTheDocument();
+        expect(searchWeatherComponent).toBeInTheDocument();
         expect(Forecast).not.toHaveBeenCalled();
         expect(SearchWeather).toHaveBeenCalled();
     });
 
-    // it('renders the Forecast component if forecast is not null', () => {
-    //     const useStateSpy = jest.spyOn(React, 'useState');
-    //     useStateSpy.mockImplementationOnce(() => [mockForecast, jest.fn()]);
-    //
-    //     render(<Home />);
-    //     const forecast = screen.getByText(/Mocked Forecast/i);
-    //
-    //     expect(forecast).toBeInTheDocument();
-    //     expect(Forecast).toHaveBeenCalled();
-    //     expect(SearchWeather).not.toHaveBeenCalled();
-    // });
+    it('renders the Forecast component if forecast is set', () => {
+        const useStateSpy = jest.spyOn(React, 'useState');
+        useStateSpy.mockImplementationOnce(() => [mockForecast, jest.fn()]);
+
+        render(<Home />);
+        const forecastComponent = screen.getByText('Mocked Forecast');
+
+        expect(forecastComponent).toBeInTheDocument();
+        expect(Forecast).toHaveBeenCalled();
+        expect(SearchWeather).not.toHaveBeenCalled();
+    });
 });

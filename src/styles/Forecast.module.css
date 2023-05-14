@@ -1,0 +1,14 @@
+.forecastContainer {
+    text-align: center;
+}
+
+.cityName {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.temperature {
+    font-size: 1.5rem;
+    color: white;
+}

@@ -3,12 +3,12 @@ import Forecast from '@/src/components/Forecast';
 import { mockForecast } from '@/mocks/mockData';
 
 describe('Forecast', () => {
-    test('renders the forecast name and temperature', () => {
+    test('renders the city name and the temperature', () => {
         render(<Forecast forecast={mockForecast} />);
-        const cityName = screen.getByText(mockForecast.name);
-        const temperature = screen.getByText(mockForecast.main.temp);
+        const cityNameElement = screen.getByText(mockForecast.name);
+        const temperatureElement = screen.getByText(`${mockForecast.main.temp} °C`);
 
-        expect(cityName).toBeInTheDocument();
-        expect(temperature).toBeInTheDocument();
+        expect(cityNameElement).toBeInTheDocument();
+        expect(temperatureElement).toBeInTheDocument();
     });
 });

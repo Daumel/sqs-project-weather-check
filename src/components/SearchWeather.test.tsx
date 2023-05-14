@@ -1,18 +1,27 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import SearchWeather from './SearchWeather';
-import Suggestions from './Suggestions';
+import SearchWeather from '@/src/components/SearchWeather';
 import { mockSearchOption } from '@/mocks/mockData';
+import axios from 'axios';
 import React from 'react';
 
 jest.mock('./Suggestions', () => {
-    return jest.fn(() => <div>Mocked Suggestions</div>);
+    return jest.fn(({ setCity }) => (
+        <ul>
+            <li>
+                <button onClick={() => setCity(mockSearchOption)}>Mocked Search Option</button>
+            </li>
+        </ul>
+    ));
 });
 
-const setForecast = jest.fn();
+const typeIntoForm = (text: string) => {
+    const inputElement = screen.getByRole('textbox');
+    fireEvent.change(inputElement, { target: { value: text } });
+};
 
 describe('SearchWeather', () => {
     beforeEach(() => {
-        render(<SearchWeather setForecast={setForecast} />);
+        render(<SearchWeather setForecast={jest.fn()} />);
     });
 
     afterEach(() => {
@@ -20,38 +29,43 @@ describe('SearchWeather', () => {
     });
 
     it('renders the input field and the search button', () => {
-        const input = screen.getByRole('textbox');
-        const button = screen.getByRole('button', { name: /search/i });
+        const inputElement = screen.getByRole('textbox');
+        const searchButton = screen.getByRole('button', { name: 'Search' });
 
-        expect(input).toBeInTheDocument();
-        expect(button).toBeInTheDocument();
+        expect(inputElement).toBeInTheDocument();
+        expect(searchButton).toBeInTheDocument();
     });
 
-    // it('updates the input field value', () => {
-    //     const input = screen.getByRole('textbox');
-    //     fireEvent.change(input, { target: { value: 'Ber' } });
-    //
-    //     expect(input).toHaveValue('Ber');
-    // });
+    it('fetches search options when search term is at least 3 characters long', async () => {
+        const fetchSearchOptionsSpy = jest.spyOn(axios, 'get');
+        typeIntoForm('Ber');
 
-    it('displays the suggestions when search term length is >= 3', async () => {
-        const input = screen.getByRole('textbox');
-        fireEvent.change(input, { target: { value: 'Ber' } });
-
-        await waitFor(() => {
-            expect(Suggestions).toHaveBeenCalled();
-        });
+        await waitFor(() => expect(fetchSearchOptionsSpy).toHaveBeenCalled());
     });
 
-    // it('submits the search when a city is selected and the search button is clicked', async () => {
-    //     const useStateSpy = jest.spyOn(React, 'useState');
-    //     useStateSpy.mockImplementationOnce(() => [mockSearchOption, jest.fn()]);
-    //
-    //     const button = screen.getByRole('button', { name: /search/i });
-    //     fireEvent.click(button);
-    //
-    //     await waitFor(() => {
-    //         expect(setForecast).toHaveBeenCalled();
-    //     });
-    // });
+    it('does not fetch search options when search term is less than 3 characters long', async () => {
+        const fetchSearchOptionsSpy = jest.spyOn(axios, 'get');
+        typeIntoForm('Be');
+
+        await waitFor(() => expect(fetchSearchOptionsSpy).not.toHaveBeenCalled());
+    });
+
+    it('fetches forecast when a city is selected and the search button is clicked', async () => {
+        const fetchForecastSpy = jest.spyOn(axios, 'get');
+        const suggestionButton = screen.getByRole('button', { name: 'Mocked Search Option' });
+        const searchButton = screen.getByRole('button', { name: 'Search' });
+
+        fireEvent.click(suggestionButton);
+        fireEvent.click(searchButton);
+
+        await waitFor(() => expect(fetchForecastSpy).toHaveBeenCalled());
+    });
+
+    it('does not fetch forecast when no city is selected and the search button is clicked', async () => {
+        const fetchForecastSpy = jest.spyOn(axios, 'get');
+        const searchButton = screen.getByRole('button', { name: 'Search' });
+        fireEvent.click(searchButton);
+
+        await waitFor(() => expect(fetchForecastSpy).not.toHaveBeenCalled());
+    });
 });
