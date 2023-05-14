@@ -5,30 +5,30 @@ import { mockSearchOptions } from '@/mocks/mockData';
 describe('Suggestions', () => {
     it('renders a list of suggestions', () => {
         render(<Suggestions searchOptions={mockSearchOptions} setCity={jest.fn()} />);
-        const suggestions = screen.getAllByRole('listitem');
-        expect(suggestions.length).toBe(mockSearchOptions.length);
+        const suggestionList = screen.getAllByRole('listitem');
+        expect(suggestionList.length).toBe(mockSearchOptions.length);
 
         mockSearchOptions.forEach((option, index) => {
-            const text = `${option.name}, ${option.country}`;
-            expect(screen.getByText(text)).toBeInTheDocument();
-            expect(suggestions[index]).toHaveTextContent(text);
+            const buttonText = `${option.name}, ${option.country}`;
+            expect(screen.getByText(buttonText)).toBeInTheDocument();
+            expect(suggestionList[index]).toHaveTextContent(buttonText);
         });
     });
 
-    it('renders no suggestions when searchOptions is null', () => {
+    it('renders no suggestions when search options are empty', () => {
         render(<Suggestions searchOptions={null} setCity={jest.fn()} />);
-        const suggestions = screen.queryAllByRole('listitem');
-        expect(suggestions.length).toBe(0);
+        const suggestionList = screen.queryAllByRole('listitem');
+        expect(suggestionList.length).toBe(0);
     });
 
-    it('calls setCity with the correct searchOption when a button is clicked', () => {
-        const setCity = jest.fn();
-        render(<Suggestions searchOptions={mockSearchOptions} setCity={setCity} />);
+    it('calls setCity with the correct search option when a button is clicked', () => {
+        const setCityMock = jest.fn();
+        render(<Suggestions searchOptions={mockSearchOptions} setCity={setCityMock} />);
 
-        const buttons = screen.getAllByRole('button');
-        fireEvent.click(buttons[0]);
+        const suggestionButtons = screen.getAllByRole('button');
+        fireEvent.click(suggestionButtons[0]);
 
-        expect(setCity).toHaveBeenCalledTimes(1);
-        expect(setCity).toHaveBeenCalledWith(mockSearchOptions[0]);
+        expect(setCityMock).toHaveBeenCalledTimes(1);
+        expect(setCityMock).toHaveBeenCalledWith(mockSearchOptions[0]);
     });
 });

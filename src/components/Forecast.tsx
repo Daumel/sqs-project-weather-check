@@ -1,4 +1,5 @@
 import { IForecast } from '@/src/interfaces';
+import styles from '@/src/styles/Forecast.module.css';
 
 type Props = {
     forecast: IForecast;
@@ -6,8 +7,10 @@ type Props = {
 
 const Suggestions = ({ forecast }: Props): JSX.Element => (
     <section>
-        <h1>{forecast.name}</h1>
-        <p>{forecast.main.temp}</p>
+        <div className={styles.forecastContainer}>
+            <h1 className={styles.cityName}>{forecast.name}</h1>
+            <p className={styles.temperature}>{forecast.main.temp}&nbsp;&deg;C</p>
+        </div>
     </section>
 );
 

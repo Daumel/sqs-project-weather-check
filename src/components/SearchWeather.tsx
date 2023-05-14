@@ -1,23 +1,51 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { IForecast, ISearchOption } from '@/src/interfaces';
 import Suggestions from './Suggestions';
-import { fetchSearchOptions, fetchForecast } from '@/src/forecastApi/fetchApiData';
+import axios from 'axios';
+import styles from '@/src/styles/SearchWeather.module.css';
+
+const SEARCH_OPTIONS_GET_URL = '/api/api-search-options';
+const FORECAST_GET_URL = '/api/api-forecast';
 
 type Props = {
     setForecast: (option: IForecast) => void;
 };
 
 const SearchWeather = ({ setForecast }: Props): JSX.Element => {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [rawSearchTerm, setRawSearchTerm] = useState('');
     const [searchOptions, setSearchOptions] = useState<ISearchOption[] | null>(null);
     const [city, setCity] = useState<ISearchOption | null>(null);
 
-    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(e.target.value);
+    const fetchSearchOptions = async (searchTerm: string) => {
+        await axios
+            .get<ISearchOption[]>(SEARCH_OPTIONS_GET_URL, { params: { term: searchTerm } })
+            .then(response => {
+                setSearchOptions(response.data);
+            })
+            .catch(error => {
+                console.error(error.message);
+            });
+    };
 
-        const value = e.target.value.trim();
-        if (value.length >= 3) {
-            void fetchSearchOptions(value, setSearchOptions);
+    const fetchForecast = async (city: ISearchOption) => {
+        await axios
+            .get<IForecast>(FORECAST_GET_URL, {
+                params: { name: city.name, lat: city.lat, lon: city.lon },
+            })
+            .then(response => {
+                setForecast(response.data);
+            })
+            .catch(error => {
+                console.error(error.message);
+            });
+    };
+
+    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setRawSearchTerm(e.target.value);
+
+        const searchTerm = e.target.value.trim();
+        if (searchTerm.length >= 3) {
+            fetchSearchOptions(searchTerm);
         }
     };
 
@@ -25,21 +53,24 @@ const SearchWeather = ({ setForecast }: Props): JSX.Element => {
         if (!city) {
             return;
         }
-
-        void fetchForecast(city, setForecast);
+        fetchForecast(city);
     };
 
     useEffect(() => {
         if (city) {
-            setSearchTerm(city.name);
+            setRawSearchTerm(city.name);
             setSearchOptions([]);
         }
     }, [city]);
 
     return (
         <section>
-            <input type="text" value={searchTerm} onChange={onInputChange} />
-            <button onClick={onSubmit}>Search</button>
+            <div className="flexContainer">
+                <input type="text" value={rawSearchTerm} onChange={onInputChange} className={styles.searchTermInput} />
+                <button onClick={onSubmit} className={styles.searchButton}>
+                    Search
+                </button>
+            </div>
             <Suggestions searchOptions={searchOptions} setCity={setCity} />
         </section>
     );

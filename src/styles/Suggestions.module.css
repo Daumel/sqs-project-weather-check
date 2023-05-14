@@ -1,0 +1,19 @@
+.suggestionList {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+.suggestionItem {
+    margin-bottom: 0.5rem;
+}
+
+.suggestionButton {
+    background-color: white;
+    color: #4a4a4a;
+    border: 1px solid #4a4a4a;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+}

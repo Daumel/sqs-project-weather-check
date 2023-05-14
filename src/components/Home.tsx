@@ -2,22 +2,40 @@ import { IForecast } from '@/src/interfaces';
 import { useEffect, useState } from 'react';
 import SearchWeather from '@/src/components/SearchWeather';
 import Forecast from '@/src/components/Forecast';
-import { createWeatherCheck } from '@/src/persistence/weatherCheck';
+import axios from 'axios';
+import styles from '@/src/styles/Home.module.css';
+
+const WEATHER_CHECK_POST_URL = '/api/weather-check';
 
 const Home = (): JSX.Element => {
     const [forecast, setForecast] = useState<IForecast | null>(null);
 
+    const createWeatherCheck = async (forecast: IForecast) => {
+        await axios
+            .post(WEATHER_CHECK_POST_URL, {
+                name: forecast.name,
+                temp: forecast.main.temp,
+            })
+            .catch(error => {
+                console.error(error.message);
+            });
+    };
+
     useEffect(() => {
         if (forecast) {
-            void createWeatherCheck(forecast.name, forecast.main.temp);
+            createWeatherCheck(forecast);
         }
     }, [forecast]);
 
     return (
-        <div>
-            <h1>Weather Check</h1>
-            <main>{forecast ? <Forecast forecast={forecast} /> : <SearchWeather setForecast={setForecast} />}</main>
-        </div>
+        <>
+            <h1 className={styles.title}>Weather Check</h1>
+            <main>
+                <div className="flexContainer">
+                    {forecast ? <Forecast forecast={forecast} /> : <SearchWeather setForecast={setForecast} />}
+                </div>
+            </main>
+        </>
     );
 };
 
