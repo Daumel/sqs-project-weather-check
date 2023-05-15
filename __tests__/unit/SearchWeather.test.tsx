@@ -1,23 +1,19 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import SearchWeather from '@/src/components/SearchWeather';
-import { mockSearchOption } from '@/mocks/mockData';
+import { mockSearchOptionForBerlin } from '@/mocks/mockData';
+import { typeIntoForm, clickSuggestionButton, clickSearchButton, waitForNeverToHappen } from '@/__tests__/test-util';
 import axios from 'axios';
 import React from 'react';
 
-jest.mock('./Suggestions', () => {
+jest.mock('../../src/components/Suggestions', () => {
     return jest.fn(({ setCity }) => (
         <ul>
             <li>
-                <button onClick={() => setCity(mockSearchOption)}>Mocked Search Option</button>
+                <button onClick={() => setCity(mockSearchOptionForBerlin)}>Mocked Search Option</button>
             </li>
         </ul>
     ));
 });
-
-const typeIntoForm = (text: string) => {
-    const inputElement = screen.getByRole('textbox');
-    fireEvent.change(inputElement, { target: { value: text } });
-};
 
 describe('SearchWeather', () => {
     beforeEach(() => {
@@ -47,25 +43,22 @@ describe('SearchWeather', () => {
         const fetchSearchOptionsSpy = jest.spyOn(axios, 'get');
         typeIntoForm('Be');
 
-        await waitFor(() => expect(fetchSearchOptionsSpy).not.toHaveBeenCalled());
+        await waitForNeverToHappen(() => expect(fetchSearchOptionsSpy).toHaveBeenCalled());
     });
 
     it('fetches forecast when a city is selected and the search button is clicked', async () => {
         const fetchForecastSpy = jest.spyOn(axios, 'get');
-        const suggestionButton = screen.getByRole('button', { name: 'Mocked Search Option' });
-        const searchButton = screen.getByRole('button', { name: 'Search' });
 
-        fireEvent.click(suggestionButton);
-        fireEvent.click(searchButton);
+        clickSuggestionButton();
+        clickSearchButton();
 
         await waitFor(() => expect(fetchForecastSpy).toHaveBeenCalled());
     });
 
     it('does not fetch forecast when no city is selected and the search button is clicked', async () => {
         const fetchForecastSpy = jest.spyOn(axios, 'get');
-        const searchButton = screen.getByRole('button', { name: 'Search' });
-        fireEvent.click(searchButton);
+        clickSearchButton();
 
-        await waitFor(() => expect(fetchForecastSpy).not.toHaveBeenCalled());
+        await waitForNeverToHappen(() => expect(fetchForecastSpy).toHaveBeenCalled());
     });
 });

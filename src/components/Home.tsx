@@ -10,8 +10,8 @@ const WEATHER_CHECK_POST_URL = '/api/weather-check';
 const Home = (): JSX.Element => {
     const [forecast, setForecast] = useState<IForecast | null>(null);
 
-    const createWeatherCheck = async (forecast: IForecast) => {
-        await axios
+    const createWeatherCheck = (forecast: IForecast) => {
+        axios
             .post(WEATHER_CHECK_POST_URL, {
                 name: forecast.name,
                 temp: forecast.main.temp,

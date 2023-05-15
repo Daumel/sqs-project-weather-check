@@ -6,11 +6,11 @@ const POST_SUCCESS_MESSAGE = 'Created WeatherCheck entry successfully';
 const POST_ERROR_MESSAGE = 'Could not create WeatherCheck entry';
 const POST_REQUEST_TYPE_ERROR_MESSAGE = 'Only POST requests are allowed';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
         const { name, temp } = req.body;
         logger.info(`Creating WeatherCheck entry (name: ${name}, temp: ${temp})`);
-        await prisma.weatherCheck
+        prisma.weatherCheck
             .create({
                 data: {
                     name,

@@ -1,21 +1,21 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import Suggestions from '@/src/components/Suggestions';
-import { mockSearchOptions } from '@/mocks/mockData';
+import { mockSearchOptionsForTermBer } from '@/mocks/mockData';
 
 describe('Suggestions', () => {
     it('renders a list of suggestions', () => {
-        render(<Suggestions searchOptions={mockSearchOptions} setCity={jest.fn()} />);
+        render(<Suggestions searchOptions={mockSearchOptionsForTermBer} setCity={jest.fn()} />);
         const suggestionList = screen.getAllByRole('listitem');
-        expect(suggestionList.length).toBe(mockSearchOptions.length);
+        expect(suggestionList.length).toBe(mockSearchOptionsForTermBer.length);
 
-        mockSearchOptions.forEach((option, index) => {
+        mockSearchOptionsForTermBer.forEach((option, index) => {
             const buttonText = `${option.name}, ${option.country}`;
             expect(screen.getByText(buttonText)).toBeInTheDocument();
             expect(suggestionList[index]).toHaveTextContent(buttonText);
         });
     });
 
-    it('renders no suggestions when search options are empty', () => {
+    it('renders no suggestions when search options are null', () => {
         render(<Suggestions searchOptions={null} setCity={jest.fn()} />);
         const suggestionList = screen.queryAllByRole('listitem');
         expect(suggestionList.length).toBe(0);
@@ -23,12 +23,12 @@ describe('Suggestions', () => {
 
     it('calls setCity with the correct search option when a button is clicked', () => {
         const setCityMock = jest.fn();
-        render(<Suggestions searchOptions={mockSearchOptions} setCity={setCityMock} />);
+        render(<Suggestions searchOptions={mockSearchOptionsForTermBer} setCity={setCityMock} />);
 
         const suggestionButtons = screen.getAllByRole('button');
         fireEvent.click(suggestionButtons[0]);
 
         expect(setCityMock).toHaveBeenCalledTimes(1);
-        expect(setCityMock).toHaveBeenCalledWith(mockSearchOptions[0]);
+        expect(setCityMock).toHaveBeenCalledWith(mockSearchOptionsForTermBer[0]);
     });
 });

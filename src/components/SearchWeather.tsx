@@ -16,8 +16,8 @@ const SearchWeather = ({ setForecast }: Props): JSX.Element => {
     const [searchOptions, setSearchOptions] = useState<ISearchOption[] | null>(null);
     const [city, setCity] = useState<ISearchOption | null>(null);
 
-    const fetchSearchOptions = async (searchTerm: string) => {
-        await axios
+    const fetchSearchOptions = (searchTerm: string) => {
+        axios
             .get<ISearchOption[]>(SEARCH_OPTIONS_GET_URL, { params: { term: searchTerm } })
             .then(response => {
                 setSearchOptions(response.data);
@@ -27,8 +27,8 @@ const SearchWeather = ({ setForecast }: Props): JSX.Element => {
             });
     };
 
-    const fetchForecast = async (city: ISearchOption) => {
-        await axios
+    const fetchForecast = (city: ISearchOption) => {
+        axios
             .get<IForecast>(FORECAST_GET_URL, {
                 params: { name: city.name, lat: city.lat, lon: city.lon },
             })

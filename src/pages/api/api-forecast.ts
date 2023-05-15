@@ -6,7 +6,7 @@ const GET_SUCCESS_MESSAGE = `Fetched forecast successfully`;
 const GET_ERROR_MESSAGE = 'Could not fetch forecast';
 const GET_REQUEST_TYPE_ERROR_MESSAGE = 'Only GET requests are allowed';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'GET') {
         const API_KEY = process.env.API_KEY;
         const name = req.query.name;
@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const forecastUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`;
 
         logger.info(`Fetching forecast for ${name} (lat: ${latitude}, lon: ${longitude})`);
-        await axios
+        axios
             .get(forecastUrl)
             .then(forecast => {
                 logger.info(`${GET_SUCCESS_MESSAGE} for ${name}`);
