@@ -6,10 +6,10 @@ const GET_SUCCESS_MESSAGE = `Fetched WeatherCheck entries successfully`;
 const GET_ERROR_MESSAGE = 'Could not fetch WeatherCheck entries';
 const GET_REQUEST_TYPE_ERROR_MESSAGE = 'Only GET requests are allowed';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'GET') {
         logger.info(`Fetching all WeatherCheck entries`);
-        await prisma.weatherCheck
+        prisma.weatherCheck
             .findMany()
             .then(weatherChecks => {
                 logger.info(GET_SUCCESS_MESSAGE);

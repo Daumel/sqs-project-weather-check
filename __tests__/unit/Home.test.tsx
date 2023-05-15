@@ -3,13 +3,13 @@ import { render, screen } from '@testing-library/react';
 import Home from '@/src/components/Home';
 import SearchWeather from '@/src/components/SearchWeather';
 import Forecast from '@/src/components/Forecast';
-import { mockForecast } from '@/mocks/mockData';
+import { mockForecastForBerlin } from '@/mocks/mockData';
 
-jest.mock('./SearchWeather', () => {
+jest.mock('../../src/components/SearchWeather', () => {
     return jest.fn(() => <div>Mocked SearchWeather</div>);
 });
 
-jest.mock('./Forecast', () => {
+jest.mock('../../src/components/Forecast', () => {
     return jest.fn(() => <div>Mocked Forecast</div>);
 });
 
@@ -35,7 +35,7 @@ describe('Home', () => {
 
     it('renders the Forecast component if forecast is set', () => {
         const useStateSpy = jest.spyOn(React, 'useState');
-        useStateSpy.mockImplementationOnce(() => [mockForecast, jest.fn()]);
+        useStateSpy.mockImplementationOnce(() => [mockForecastForBerlin, jest.fn()]);
 
         render(<Home />);
         const forecastComponent = screen.getByText('Mocked Forecast');

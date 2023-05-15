@@ -1,13 +1,27 @@
 import { rest } from 'msw';
-import { mockForecast, mockSearchOptions } from '@/mocks/mockData';
+import { mockForecastForBerlin, mockSearchOptionsForTermBer, mockSearchOptionsForTermHamburg } from '@/mocks/mockData';
 
 export const handlers = [
     rest.get(`/api/api-search-options`, (req, res, ctx) => {
-        return res(ctx.status(200), ctx.json(mockSearchOptions));
+        const termQueryParameter = req.url.searchParams.get('term');
+
+        if (termQueryParameter === 'Ber') {
+            return res(ctx.status(200), ctx.json(mockSearchOptionsForTermBer));
+        } else if (termQueryParameter === 'Hamburg') {
+            return res(ctx.status(200), ctx.json(mockSearchOptionsForTermHamburg));
+        } else {
+            return res(ctx.status(200), ctx.json([]));
+        }
     }),
 
     rest.get(`/api/api-forecast`, (req, res, ctx) => {
-        return res(ctx.status(200), ctx.json(mockForecast));
+        const nameQueryParameter = req.url.searchParams.get('name');
+
+        if (nameQueryParameter === 'Berlin') {
+            return res(ctx.status(200), ctx.json(mockForecastForBerlin));
+        } else {
+            return res(ctx.status(200), ctx.json([]));
+        }
     }),
 
     rest.post(`/api/weather-check`, (req, res, ctx) => {

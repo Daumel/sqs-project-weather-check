@@ -1,11 +1,18 @@
-export const mockForecast = {
+export const mockForecastForBerlin = {
     name: 'Berlin',
     main: {
         temp: 25,
     },
 };
 
-export const mockSearchOptions = [
+export const mockSearchOptionForBerlin = {
+    name: 'Berlin',
+    country: 'Germany',
+    lat: 52.52,
+    lon: 13.405,
+};
+
+export const mockSearchOptionsForTermBer = [
     {
         name: 'Berlin',
         country: 'Germany',
@@ -13,22 +20,24 @@ export const mockSearchOptions = [
         lon: 13.405,
     },
     {
-        name: 'Munich',
+        name: 'Bernbeuren',
+        country: 'Germany',
+        lat: 47.7333,
+        lon: 10.7833,
+    },
+    {
+        name: 'Bernried',
         country: 'Germany',
         lat: 48.1351,
         lon: 11.582,
     },
+];
+
+export const mockSearchOptionsForTermHamburg = [
     {
         name: 'Hamburg',
         country: 'Germany',
-        lat: 53.5511,
-        lon: 9.9937,
+        lat: 53.55,
+        lon: 10.483,
     },
 ];
-
-export const mockSearchOption = {
-    name: 'Berlin',
-    country: 'Germany',
-    lat: 52.52,
-    lon: 13.405,
-};

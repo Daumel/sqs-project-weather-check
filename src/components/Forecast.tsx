@@ -5,7 +5,7 @@ type Props = {
     forecast: IForecast;
 };
 
-const Suggestions = ({ forecast }: Props): JSX.Element => (
+const Forecast = ({ forecast }: Props): JSX.Element => (
     <section>
         <div className={styles.forecastContainer}>
             <h1 className={styles.cityName}>{forecast.name}</h1>
@@ -14,4 +14,4 @@ const Suggestions = ({ forecast }: Props): JSX.Element => (
     </section>
 );
 
-export default Suggestions;
+export default Forecast;
