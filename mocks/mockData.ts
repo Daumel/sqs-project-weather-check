@@ -32,12 +32,3 @@ export const mockSearchOptionsForTermBer = [
         lon: 11.582,
     },
 ];
-
-export const mockSearchOptionsForTermHamburg = [
-    {
-        name: 'Hamburg',
-        country: 'Germany',
-        lat: 53.55,
-        lon: 10.483,
-    },
-];

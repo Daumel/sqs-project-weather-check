@@ -4,6 +4,7 @@ import { mockSearchOptionForBerlin } from '@/mocks/mockData';
 import { typeIntoForm, clickSuggestionButton, clickSearchButton, waitForNeverToHappen } from '@/__tests__/test-util';
 import axios from 'axios';
 import React from 'react';
+import { server } from '@/mocks/mswServer';
 
 jest.mock('../../src/components/Suggestions', () => {
     return jest.fn(({ setCity }) => (
@@ -16,12 +17,21 @@ jest.mock('../../src/components/Suggestions', () => {
 });
 
 describe('SearchWeather', () => {
+    beforeAll(() => {
+        server.listen();
+    });
+
+    afterAll(() => {
+        server.close();
+    });
+
     beforeEach(() => {
         render(<SearchWeather setForecast={jest.fn()} />);
     });
 
     afterEach(() => {
         jest.clearAllMocks();
+        server.resetHandlers();
     });
 
     it('renders the input field and the search button', () => {

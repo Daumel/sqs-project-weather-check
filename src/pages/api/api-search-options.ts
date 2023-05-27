@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import logger from '@/src/logger';
-import axios from '@/src/axiosBackendConfig';
+import axios from 'axios';
 
 const GET_SUCCESS_MESSAGE = `Fetched search options successfully`;
 const GET_ERROR_MESSAGE = 'Could not fetch search options';
@@ -19,10 +19,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
                 logger.info(`${GET_SUCCESS_MESSAGE} for ${searchTerm}`);
                 res.status(200).json(searchOptions.data);
             })
-            .catch(() => {
+            .catch(error => {
+                logger.error(error);
                 res.status(500).json({ error: GET_ERROR_MESSAGE });
             });
     } else {
-        res.status(500).json({ error: GET_REQUEST_TYPE_ERROR_MESSAGE });
+        res.status(405).json({ error: GET_REQUEST_TYPE_ERROR_MESSAGE });
     }
 }

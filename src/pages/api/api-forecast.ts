@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import logger from '@/src/logger';
-import axios from '@/src/axiosBackendConfig';
+import axios from 'axios';
 
 const GET_SUCCESS_MESSAGE = `Fetched forecast successfully`;
 const GET_ERROR_MESSAGE = 'Could not fetch forecast';
@@ -21,10 +21,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
                 logger.info(`${GET_SUCCESS_MESSAGE} for ${name}`);
                 res.status(200).json(forecast.data);
             })
-            .catch(() => {
+            .catch(error => {
+                logger.error(error);
                 res.status(500).json({ error: GET_ERROR_MESSAGE });
             });
     } else {
-        res.status(500).json({ error: GET_REQUEST_TYPE_ERROR_MESSAGE });
+        res.status(405).json({ error: GET_REQUEST_TYPE_ERROR_MESSAGE });
     }
 }

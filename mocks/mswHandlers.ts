@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { mockForecastForBerlin, mockSearchOptionsForTermBer, mockSearchOptionsForTermHamburg } from '@/mocks/mockData';
+import { mockForecastForBerlin, mockSearchOptionsForTermBer } from '@/mocks/mockData';
 
 export const handlers = [
     rest.get(`/api/api-search-options`, (req, res, ctx) => {
@@ -7,8 +7,6 @@ export const handlers = [
 
         if (termQueryParameter === 'Ber') {
             return res(ctx.status(200), ctx.json(mockSearchOptionsForTermBer));
-        } else if (termQueryParameter === 'Hamburg') {
-            return res(ctx.status(200), ctx.json(mockSearchOptionsForTermHamburg));
         } else {
             return res(ctx.status(200), ctx.json([]));
         }
@@ -30,7 +28,6 @@ export const handlers = [
 
     // Fallback handler
     rest.get('*', (req, res, ctx) => {
-        console.error(`Please add request handler for ${req.url.toString()}`);
         return res(ctx.status(500), ctx.json({ error: 'You must add request handler.' }));
     }),
 ];

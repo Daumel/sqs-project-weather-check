@@ -16,3 +16,8 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.errorMessage {
+    color: #781a1a;
+    font-weight: bold;
+}
