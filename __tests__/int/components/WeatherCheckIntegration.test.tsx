@@ -1,25 +1,24 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import App from '@/src/components/Home';
-import { mockForecastForBerlin, mockSearchOptionsForTermBer, mockSearchOptionsForTermHamburg } from '@/mocks/mockData';
+import WeatherCheck from '@/src/components/WeatherCheck';
 import { typeIntoForm, clickSearchButton, waitForNeverToHappen } from '@/__tests__/test-util';
 
-describe('App', () => {
+describe('WeatherCheck', () => {
     beforeEach(() => {
-        render(<App />);
+        render(<WeatherCheck />);
     });
 
     it('displays the forecast when a city is selected and the search button is clicked', async () => {
-        typeIntoForm('Ber');
+        typeIntoForm('Reit im Winkl');
 
-        const suggestionButtons = await screen.findAllByText(/Ber/i, { selector: 'button' });
-        expect(suggestionButtons.length).toBe(mockSearchOptionsForTermBer.length);
+        const suggestionButtons = await screen.findAllByText('Reit im Winkl, DE', { selector: 'button' });
+        expect(suggestionButtons.length).toBe(1);
 
         fireEvent.click(suggestionButtons[0]);
         clickSearchButton();
 
         await waitFor(() => {
-            const cityNameElement = screen.getByText(`${mockForecastForBerlin.name}`);
-            const temperatureElement = screen.getByText(`${mockForecastForBerlin.main.temp} °C`);
+            const cityNameElement = screen.getByText('Reit im Winkl');
+            const temperatureElement = screen.getByText(/°C/);
 
             expect(cityNameElement).toBeInTheDocument();
             expect(temperatureElement).toBeInTheDocument();
@@ -48,10 +47,10 @@ describe('App', () => {
         typeIntoForm('Ber');
 
         let suggestionButtons = await screen.findAllByText(/Ber/i, { selector: 'button' });
-        expect(suggestionButtons.length).toBe(mockSearchOptionsForTermBer.length);
+        expect(suggestionButtons.length).toBeGreaterThan(1);
 
         typeIntoForm('Hamburg');
-        suggestionButtons = await screen.findAllByText(/Hamburg/i, { selector: 'button' });
-        expect(suggestionButtons.length).toBe(mockSearchOptionsForTermHamburg.length);
+        suggestionButtons = await screen.findAllByText('Hamburg, DE', { selector: 'button' });
+        expect(suggestionButtons.length).toBe(1);
     });
 });

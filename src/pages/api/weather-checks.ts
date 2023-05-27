@@ -17,9 +17,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             })
             .catch(error => {
                 logger.error(`${GET_ERROR_MESSAGE}: ${error.message}`);
-                res.status(500).json({ message: GET_ERROR_MESSAGE });
+                res.status(500).json({ error: GET_ERROR_MESSAGE });
             });
     } else {
-        res.status(500).json({ error: GET_REQUEST_TYPE_ERROR_MESSAGE });
+        res.status(405).json({ error: GET_REQUEST_TYPE_ERROR_MESSAGE });
     }
 }

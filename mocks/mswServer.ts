@@ -4,8 +4,4 @@ import { handlers } from '@/mocks/mswHandlers';
 
 const server = setupServer(...handlers);
 
-beforeAll(() => server.listen());
-afterAll(() => server.close());
-afterEach(() => server.resetHandlers());
-
 export { server, rest };

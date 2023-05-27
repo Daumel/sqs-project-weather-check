@@ -13,6 +13,7 @@ type Props = {
 
 const SearchWeather = ({ setForecast }: Props): JSX.Element => {
     const [rawSearchTerm, setRawSearchTerm] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const [searchOptions, setSearchOptions] = useState<ISearchOption[] | null>(null);
     const [city, setCity] = useState<ISearchOption | null>(null);
 
@@ -20,10 +21,12 @@ const SearchWeather = ({ setForecast }: Props): JSX.Element => {
         axios
             .get<ISearchOption[]>(SEARCH_OPTIONS_GET_URL, { params: { term: searchTerm } })
             .then(response => {
+                setErrorMessage('');
                 setSearchOptions(response.data);
             })
             .catch(error => {
-                console.error(error.message);
+                console.log(error.message);
+                setErrorMessage('Failed to fetch search options');
             });
     };
 
@@ -33,10 +36,12 @@ const SearchWeather = ({ setForecast }: Props): JSX.Element => {
                 params: { name: city.name, lat: city.lat, lon: city.lon },
             })
             .then(response => {
+                setErrorMessage('');
                 setForecast(response.data);
             })
             .catch(error => {
-                console.error(error.message);
+                console.log(error.message);
+                setErrorMessage('Failed to fetch forecast');
             });
     };
 
@@ -71,6 +76,7 @@ const SearchWeather = ({ setForecast }: Props): JSX.Element => {
                     Search
                 </button>
             </div>
+            <p className={styles.errorMessage}>{errorMessage}</p>
             <Suggestions searchOptions={searchOptions} setCity={setCity} />
         </section>
     );

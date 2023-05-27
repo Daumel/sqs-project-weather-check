@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Home from '@/src/components/Home';
+import WeatherCheck from '@/src/components/WeatherCheck';
 
 const Root = (): JSX.Element => (
     <>
@@ -9,7 +9,7 @@ const Root = (): JSX.Element => (
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Home></Home>
+        <WeatherCheck></WeatherCheck>
     </>
 );
 

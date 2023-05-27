@@ -7,7 +7,7 @@ import styles from '@/src/styles/Home.module.css';
 
 const WEATHER_CHECK_POST_URL = '/api/weather-check';
 
-const Home = (): JSX.Element => {
+const WeatherCheck = (): JSX.Element => {
     const [forecast, setForecast] = useState<IForecast | null>(null);
 
     const createWeatherCheck = (forecast: IForecast) => {
@@ -39,4 +39,4 @@ const Home = (): JSX.Element => {
     );
 };
 
-export default Home;
+export default WeatherCheck;
