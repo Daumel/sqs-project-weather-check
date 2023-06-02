@@ -33,7 +33,7 @@ runs:
         org_name: niklas-wilhelm
         database_name: sqs-project-weather-check
         branch_name: ${{ steps.branch-name.outputs.current_branch }}
-        name: 'pass_${{ steps.branch-name.outputs.current_branch }}'
+        name: 'pass-${{ steps.branch-name.outputs.current_branch }}'
       env:
         PLANETSCALE_SERVICE_TOKEN_ID: ${{ inputs.planetscale_service_token_id }}
         PLANETSCALE_SERVICE_TOKEN: ${{ inputs.planetscale_service_token }}
