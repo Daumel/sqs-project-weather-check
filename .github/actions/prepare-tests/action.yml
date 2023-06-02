@@ -10,10 +10,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Extract branch name
-      id: extract_branch
-      shell: bash
-      run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
+    - name: Get branch name
+      id: branch-name
+      uses: tj-actions/branch-names@v7
 
     - name: Create database branch
       uses: planetscale/create-branch-action@v1
@@ -21,7 +20,7 @@ runs:
       with:
         org_name: niklas-wilhelm
         database_name: sqs-project-weather-check
-        branch_name: ${{ steps.extract_branch.outputs.branch }}
+        branch_name: ${{ steps.branch-name.outputs.current_branch }}
         from: main
       env:
         PLANETSCALE_SERVICE_TOKEN_ID: ${{ inputs.planetscale_service_token_id }}
@@ -31,10 +30,10 @@ runs:
       uses: planetscale/create-branch-password-action@v1
       id: create_database_credentials
       with:
-        org_name: my_org
-        database_name: recipes_db
-        branch_name: ${{ steps.extract_branch.outputs.branch }}
-        name: 'pass_${{ steps.extract_branch.outputs.branch }}'
+        org_name: niklas-wilhelm
+        database_name: sqs-project-weather-check
+        branch_name: ${{ steps.branch-name.outputs.current_branch }}
+        name: 'pass_${{ steps.branch-name.outputs.current_branch }}'
       env:
         PLANETSCALE_SERVICE_TOKEN_ID: ${{ inputs.planetscale_service_token_id }}
         PLANETSCALE_SERVICE_TOKEN: ${{ inputs.planetscale_service_token }}
