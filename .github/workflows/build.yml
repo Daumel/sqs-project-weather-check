@@ -51,6 +51,10 @@ jobs:
 
       - name: Prepare tests
         uses: ./.github/actions/prepare-tests
+        with:
+          planetscale_service_token_id: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+          planetscale_service_token: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+          api_key: ${{ secrets.API_KEY }}
 
       - name: Run unit and integration tests
         run: yarn jest:coverage --silent
