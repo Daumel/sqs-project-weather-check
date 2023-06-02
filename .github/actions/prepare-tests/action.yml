@@ -51,7 +51,9 @@ runs:
         cat .env
 
     - name: Build
+      shell: bash
       run: yarn build
 
     - name: Start
+      shell: bash
       run: yarn start & wait-on --timeout 60000 http://localhost:3000
