@@ -41,11 +41,10 @@ runs:
     - name: Create .env file
       shell: bash
       run: |
-        DATABASE_URL='mysql://${{ steps.create_database_credentials.outputs.username }}:${{ steps.create_database_credentials.outputs.password }}@${{ steps.create_database_credentials.outputs.hostname }}/sqs-project-weather-check?sslaccept=strict'
-        API_KEY='${{ inputs.api_key }}'
+        DATABASE_URL="mysql://${{ steps.create_database_credentials.outputs.username }}:${{ steps.create_database_credentials.outputs.password }}@${{ steps.create_database_credentials.outputs.hostname }}/sqs-project-weather-check?sslaccept=strict"
+        API_KEY="${{ inputs.api_key }}"
         
-        echo 'DATABASE_URL=$DATABASE_URL
-              API_KEY=$API_KEY' > .env
+        echo -e "DATABASE_URL=$DATABASE_URL\nAPI_KEY=$API_KEY" > .env
         
         cat .env
 
