@@ -19,15 +19,15 @@ jobs:
         node-version: [ 18.x ]
 
     steps:
-      - name: Checkout ${{ github.ref_name }}
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Set up Node.js ${{ matrix.node-version }}
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -49,8 +49,14 @@ jobs:
       - name: Check formatting
         run: yarn prettier
 
-      - name: Run tests
-        run: yarn test:coverage
+      - name: Prepare tests
+        uses: ./.github/actions/prepare-tests
+
+      - name: Run unit and integration tests
+        run: yarn jest:coverage --silent
+
+      - name: Run end-to-end tests
+        run: yarn cypress run --record false
 
       - name: Check Quality Gate
         uses: SonarSource/sonarcloud-github-action@master
@@ -64,6 +70,3 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.cache-dir }}
           key: ${{ steps.restore-cache.outputs.cache-primary-key }}
-
-      - name: Build
-        run: yarn build
