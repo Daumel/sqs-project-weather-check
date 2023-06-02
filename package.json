@@ -49,8 +49,7 @@
         "node-mocks-http": "^1.12.2",
         "prettier": "^2.8.7",
         "prisma": "^4.12.0",
-        "wait-for-expect": "^3.0.2",
-        "wait-on": "^7.0.1"
+        "wait-for-expect": "^3.0.2"
     },
     "cypress-cucumber-preprocessor": {
         "stepDefinitions": "__tests__/e2e/step_definitions/*.ts"

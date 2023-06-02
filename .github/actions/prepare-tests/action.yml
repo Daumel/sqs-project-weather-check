@@ -10,7 +10,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Get branch name
+    - name: Extract branch name
       id: branch-name
       uses: tj-actions/branch-names@v7
 
@@ -48,10 +48,15 @@ runs:
         
         cat .env
 
-    - name: Build
+    - name: Build application
       shell: bash
       run: yarn build
 
-    - name: Start
+    - name: Start application
       shell: bash
-      run: yarn start & yarn wait-on --timeout 60000 http://localhost:3000
+      run: |
+        timeout 120 bash -c 'yarn start &'
+        until curl --silent --head http://localhost:3000 | grep "200 OK"; do
+          echo "Waiting for app server..."
+          sleep 5
+        done
