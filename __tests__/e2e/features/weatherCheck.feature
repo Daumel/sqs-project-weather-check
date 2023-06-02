@@ -12,12 +12,12 @@ Feature: Checking weather for a city
   Scenario: Unsuccessful weather check with less than three characters in the search term
     When I type "Be" into the search field
     Then no suggestions should be displayed
-    And I click the search button
+    When I click the search button
     Then no weather forecast should be displayed
 
   Scenario: Unsuccessful weather check with no city selected
     When I type "Ber" into the search field
-    When I click the search button
+    And I click the search button
     Then no weather forecast should be displayed
 
   Scenario: Update weather check with new city
