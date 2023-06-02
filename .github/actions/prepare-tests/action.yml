@@ -54,4 +54,4 @@ runs:
 
     - name: Start
       shell: bash
-      run: yarn start & wait-on --timeout 60000 http://localhost:3000
+      run: yarn start & yarn wait-on --timeout 60000 http://localhost:3000
