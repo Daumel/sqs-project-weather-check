@@ -57,7 +57,7 @@ jobs:
           api_key: ${{ secrets.API_KEY }}
 
       - name: Run unit and integration tests
-        run: yarn jest:coverage --silent
+        run: yarn jest --coverage --silent
 
       - name: Run end-to-end tests
         run: yarn cypress run --record false
