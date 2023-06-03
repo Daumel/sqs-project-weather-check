@@ -22,4 +22,4 @@ jobs:
         uses: barelylabs/planetscale-action@v0.1.3-alpha
         with:
           action: 'delete-branch'
-          branch-name: '${{ steps.branch-name.outputs.current_branch }}--${{ github.run_id }}'
+          branch-name: '${{ github.run_id }}--${{ steps.branch-name.outputs.current_branch }}'

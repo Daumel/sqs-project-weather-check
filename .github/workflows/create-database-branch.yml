@@ -28,7 +28,7 @@ jobs:
         with:
           org_name: 'niklas-wilhelm'
           database_name: 'sqs-project-weather-check'
-          branch_name: '${{ steps.branch-name.outputs.current_branch }}--${{ github.run_id }}'
+          branch_name: '${{ github.run_id }}--${{ steps.branch-name.outputs.current_branch }}'
           from: 'main'
 
       - name: Create database branch credentials

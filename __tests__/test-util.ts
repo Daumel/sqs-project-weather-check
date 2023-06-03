@@ -1,6 +1,6 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
-import { createRequest, createResponse, RequestOptions } from 'node-mocks-http';
+import { createMocks } from 'node-mocks-http';
+import { RequestOptions } from 'node-mocks-http';
 
 export const typeIntoForm = (text: string) => {
     const inputElement = screen.getByRole('textbox');
@@ -21,10 +21,12 @@ export const waitForNeverToHappen = async (callable: () => unknown) => {
     await expect(waitFor(callable)).rejects.toEqual(expect.anything());
 };
 
-export const testHandler = async (handler: NextApiHandler, options: RequestOptions) => {
-    const req = createRequest<NextApiRequest>(options);
-    const res = createResponse<NextApiResponse>();
+export const createHandlerObjects = (options: RequestOptions) => {
+    const { req, res } = createMocks({
+        method: options.method,
+        query: options.query,
+        body: options.body,
+    });
 
-    await handler(req, res);
-    return res;
+    return { req, res };
 };
