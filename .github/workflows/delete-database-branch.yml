@@ -1,0 +1,22 @@
+name: Delete Database Branch Job
+
+jobs:
+  delete-database-branch:
+    runs-on: ubuntu-latest
+
+    env:
+      PLANETSCALE_ORG_NAME: 'niklas-wilhelm'
+      PLANETSCALE_DB_NAME: 'sqs-project-weather-check'
+      PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+      PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+
+    steps:
+      - name: Extract branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v7
+
+      - name: Delete database branch
+        uses: barelylabs/planetscale-action@v0.1.3-alpha
+        with:
+          action: 'delete-branch'
+          branch-name: '${{ steps.branch-name.outputs.current_branch }}--${{ github.run_id }}'

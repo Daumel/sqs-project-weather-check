@@ -1,22 +1,21 @@
-name: Build
-
+name: Quality Check Job
 
 on:
   push:
     branches:
       - main
-
   pull_request:
     types: [ opened, synchronize, reopened ]
 
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  create-database-branch:
+    name: Create database branch
+    uses: ./.github/workflows/create-database-branch.yml
+    secrets: inherit
 
-    strategy:
-      matrix:
-        node-version: [ 18.x ]
+  quality-check:
+    runs-on: ubuntu-latest
+    needs: create-database-branch
 
     steps:
       - name: Checkout repository
@@ -52,8 +51,7 @@ jobs:
       - name: Prepare tests
         uses: ./.github/actions/prepare-tests
         with:
-          planetscale_service_token_id: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
-          planetscale_service_token: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+          database_url: ${{needs.create-database-branch.outputs.database_url}}
           api_key: ${{ secrets.API_KEY }}
 
       - name: Run unit and integration tests
@@ -74,3 +72,10 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.cache-dir }}
           key: ${{ steps.restore-cache.outputs.cache-primary-key }}
+
+  delete-database-branch:
+    name: Delete database branch
+    needs: [create-database-branch, quality-check]
+    if: always()
+    uses: ./.github/workflows/delete-database-branch.yml
+    secrets: inherit

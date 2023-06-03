@@ -1,52 +1,21 @@
 name: Prepare Tests Action
-description: This action takes the necessary steps to be able to run integration and e2e tests.
+
 inputs:
-  planetscale_service_token_id:
-    required: true
-  planetscale_service_token:
+  database_url:
     required: true
   api_key:
     required: true
+
 runs:
   using: composite
   steps:
-    - name: Extract branch name
-      id: branch-name
-      uses: tj-actions/branch-names@v7
-
-    - name: Create database branch
-      uses: planetscale/create-branch-action@v1
-      id: create_branch
-      with:
-        org_name: niklas-wilhelm
-        database_name: sqs-project-weather-check
-        branch_name: ${{ steps.branch-name.outputs.current_branch }}
-        from: main
-      env:
-        PLANETSCALE_SERVICE_TOKEN_ID: ${{ inputs.planetscale_service_token_id }}
-        PLANETSCALE_SERVICE_TOKEN: ${{ inputs.planetscale_service_token }}
-
-    - name: Create database branch credentials
-      uses: planetscale/create-branch-password-action@v1
-      id: create_database_credentials
-      with:
-        org_name: niklas-wilhelm
-        database_name: sqs-project-weather-check
-        branch_name: ${{ steps.branch-name.outputs.current_branch }}
-        name: 'pass-${{ steps.branch-name.outputs.current_branch }}'
-      env:
-        PLANETSCALE_SERVICE_TOKEN_ID: ${{ inputs.planetscale_service_token_id }}
-        PLANETSCALE_SERVICE_TOKEN: ${{ inputs.planetscale_service_token }}
-
     - name: Create .env file
       shell: bash
       run: |
-        DATABASE_URL="mysql://${{ steps.create_database_credentials.outputs.username }}:${{ steps.create_database_credentials.outputs.password }}@${{ steps.create_database_credentials.outputs.hostname }}/sqs-project-weather-check?sslaccept=strict"
+        DATABASE_URL="${{ inputs.database_url }}"
         API_KEY="${{ inputs.api_key }}"
         
         echo -e "DATABASE_URL=$DATABASE_URL\nAPI_KEY=$API_KEY" > .env
-        
-        cat .env
 
     - name: Build application
       shell: bash
