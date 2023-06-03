@@ -1,5 +1,8 @@
 name: Create Database Branch Job
 
+on:
+  workflow_call:
+
 jobs:
   create-database-branch:
     runs-on: ubuntu-latest
