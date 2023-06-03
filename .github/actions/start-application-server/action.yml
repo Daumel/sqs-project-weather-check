@@ -12,11 +12,10 @@ runs:
     - name: Create .env file
       shell: bash
       run: |
-        DATABASE_URL="${{ inputs.database_url }}"
-        API_KEY="${{ inputs.api_key }}"
+        DATABASE_URL=${{ inputs.database_url }}
+        API_KEY=${{ inputs.api_key }}
         
         echo -e "DATABASE_URL=$DATABASE_URL\nAPI_KEY=$API_KEY" > .env
-        echo "${{ inputs.database_url }}"
 
     - name: Build application
       shell: bash
