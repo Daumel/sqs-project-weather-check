@@ -1,4 +1,4 @@
-name: Prepare Tests Action
+name: Start Application Server Action
 
 inputs:
   database_url:
@@ -24,8 +24,8 @@ runs:
     - name: Start application
       shell: bash
       run: |
-        timeout 120 bash -c 'yarn start &'
-        until curl --silent --head http://localhost:3000 | grep "200 OK"; do
+        timeout 240 bash -c 'yarn start &'
+        until curl --silent --head http://localhost:3000/api/weather-checks | grep "200 OK"; do
           echo "Waiting for app server..."
           sleep 5
         done
