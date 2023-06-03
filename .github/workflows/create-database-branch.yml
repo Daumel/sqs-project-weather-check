@@ -7,13 +7,12 @@ jobs:
   create-database-branch:
     runs-on: ubuntu-latest
 
+    outputs:
+      database_url: 'mysql://${{ steps.create_database_credentials.outputs.username }}:${{ steps.create_database_credentials.outputs.password }}@${{ steps.create_database_credentials.outputs.hostname }}/sqs-project-weather-check?sslaccept=strict'
+
     env:
       PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
       PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
-
-    outputs:
-      database_url:
-        value: 'mysql://${{ steps.create_database_credentials.outputs.username }}:${{ steps.create_database_credentials.outputs.password }}@${{ steps.create_database_credentials.outputs.hostname }}/sqs-project-weather-check?sslaccept=strict'
 
     steps:
       - name: Extract branch name
