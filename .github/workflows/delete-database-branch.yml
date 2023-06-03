@@ -1,5 +1,8 @@
 name: Delete Database Branch Job
 
+on:
+  workflow_call:
+
 jobs:
   delete-database-branch:
     runs-on: ubuntu-latest
