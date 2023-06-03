@@ -78,7 +78,7 @@ jobs:
           key: ${{ steps.restore-cache.outputs.cache-primary-key }}
 
   delete-database-branch:
-    needs: [create-database-branch, quality-check]
+    needs: [create-database-branch, check-code-quality]
     if: always()
     uses: ./.github/workflows/delete-database-branch.yml
     secrets: inherit
