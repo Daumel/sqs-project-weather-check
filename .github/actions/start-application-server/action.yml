@@ -24,8 +24,8 @@ runs:
     - name: Wait for application server
       shell: bash
       run: |
-        timeout 180 bash -c 'yarn start &'
+        timeout 180 bash -c 'yarn start &
         until curl --silent --head http://localhost:3000/api/weather-checks | grep "200 OK"; do
           echo "Waiting for application server..."
           sleep 5
-        done
+        done'
