@@ -9,7 +9,6 @@ on:
 
 jobs:
   create-database-branch:
-    name: Create database branch
     uses: ./.github/workflows/create-database-branch.yml
     secrets: inherit
 
@@ -51,7 +50,7 @@ jobs:
       - name: Start application server
         uses: ./.github/actions/start-application-server
         with:
-          database_url: ${{needs.create-database-branch.outputs.database_url}}
+          database_url: ${{ needs.create-database-branch.outputs.database_url }}
           api_key: ${{ secrets.API_KEY }}
 
       - name: Run unit and integration tests
@@ -74,7 +73,6 @@ jobs:
           key: ${{ steps.restore-cache.outputs.cache-primary-key }}
 
   delete-database-branch:
-    name: Delete database branch
     needs: [create-database-branch, quality-check]
     if: always()
     uses: ./.github/workflows/delete-database-branch.yml
