@@ -48,8 +48,8 @@ jobs:
       - name: Check formatting
         run: yarn prettier
 
-      - name: Prepare tests
-        uses: ./.github/actions/prepare-tests
+      - name: Start application server
+        uses: ./.github/actions/start-application-server
         with:
           database_url: ${{needs.create-database-branch.outputs.database_url}}
           api_key: ${{ secrets.API_KEY }}
