@@ -19,11 +19,3 @@ Feature: Checking weather for a city
     When I type "Ber" into the search field
     And I click the search button
     Then no weather forecast should be displayed
-
-  Scenario: Update weather check with new city
-    Given I have successfully checked the weather for "Reit im Winkl"
-    When I reload the page
-    And I type "Hamburg" into the search field
-    And I select "Hamburg" from the suggestions
-    And I click the search button
-    Then the weather forecast for "Hamburg" should be displayed

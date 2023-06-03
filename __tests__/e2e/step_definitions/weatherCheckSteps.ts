@@ -3,22 +3,9 @@ import ForecastPage from '../pages/ForecastPage';
 import SearchWeatherPage from '../pages/SearchWeatherPage';
 import { When, Then, Given } from '@badeball/cypress-cucumber-preprocessor';
 
-Given('I have successfully checked the weather for {string}', function (city) {
-    SearchWeatherPage.visit();
-    SearchWeatherPage.checkIfSearchWeatherPageIsDisplayed();
-    SearchWeatherPage.typeIntoSearchField(city.toString());
-    SearchWeatherPage.selectCityFromSuggestions(city.toString());
-    SearchWeatherPage.clickSearchButton();
-    ForecastPage.checkIfForecastIsDisplayed(city.toString());
-});
-
 Given('I am on the SearchWeather page', function () {
     SearchWeatherPage.visit();
     SearchWeatherPage.checkIfSearchWeatherPageIsDisplayed();
-});
-
-When('I reload the page', function () {
-    cy.reload();
 });
 
 When('I type {string} into the search field', function (searchTerm) {

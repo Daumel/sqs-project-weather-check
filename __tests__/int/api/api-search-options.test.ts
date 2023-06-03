@@ -1,16 +1,17 @@
 /**
  * @jest-environment node
  */
-import handler from '@/src/pages/api/api-search-options';
+import handlerApiSearchOptions from '@/src/pages/api/api-search-options';
 import waitForExpect from 'wait-for-expect';
-import { testHandler } from '@/__tests__/test-util';
+import { createHandlerObjects } from '@/__tests__/test-util';
 
 describe('API Endpoint /api/api-search-options', () => {
     it('should return a valid response', async () => {
-        const res = await testHandler(handler, {
+        const { req, res } = createHandlerObjects({
             method: 'GET',
             query: { term: 'Geretsried' },
         });
+        await handlerApiSearchOptions(req, res);
 
         await waitForExpect(() => {
             const jsonData = res._getJSONData();
@@ -20,10 +21,11 @@ describe('API Endpoint /api/api-search-options', () => {
     });
 
     it('should return a 500 if no search term is given', async () => {
-        const res = await testHandler(handler, {
+        const { req, res } = createHandlerObjects({
             method: 'GET',
             query: { term: '' },
         });
+        await handlerApiSearchOptions(req, res);
 
         await waitForExpect(() => {
             expect(res.statusCode).toBe(500);
@@ -32,7 +34,8 @@ describe('API Endpoint /api/api-search-options', () => {
     });
 
     it('should return a 405 if HTTP method is not GET', async () => {
-        const res = await testHandler(handler, { method: 'POST' });
+        const { req, res } = createHandlerObjects({ method: 'POST' });
+        await handlerApiSearchOptions(req, res);
 
         expect(res.statusCode).toBe(405);
         expect(res._getJSONData()).toEqual({

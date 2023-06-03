@@ -1,16 +1,17 @@
 /**
  * @jest-environment node
  */
-import handler from '@/src/pages/api/weather-check';
+import handlerWeatherCheck from '@/src/pages/api/weather-check';
 import waitForExpect from 'wait-for-expect';
-import { testHandler } from '@/__tests__/test-util';
+import { createHandlerObjects } from '@/__tests__/test-util';
 
 describe('API Endpoint /api/weather-check', () => {
     it('should return a valid response', async () => {
-        const res = await testHandler(handler, {
+        const { req, res } = createHandlerObjects({
             method: 'POST',
             body: { name: 'Berlin', temp: 25 },
         });
+        await handlerWeatherCheck(req, res);
 
         await waitForExpect(() => {
             expect(res._getJSONData()).toEqual({ message: 'Created WeatherCheck entry successfully' });
@@ -18,10 +19,11 @@ describe('API Endpoint /api/weather-check', () => {
     });
 
     it('should return a 500 if temp parameter is missing', async () => {
-        const res = await testHandler(handler, {
+        const { req, res } = createHandlerObjects({
             method: 'POST',
             body: { name: 'Berlin' },
         });
+        await handlerWeatherCheck(req, res);
 
         await waitForExpect(() => {
             expect(res.statusCode).toBe(500);
@@ -30,10 +32,11 @@ describe('API Endpoint /api/weather-check', () => {
     });
 
     it('should return a 500 if name parameter is missing', async () => {
-        const res = await testHandler(handler, {
+        const { req, res } = createHandlerObjects({
             method: 'POST',
             body: { temp: 25 },
         });
+        await handlerWeatherCheck(req, res);
 
         await waitForExpect(() => {
             expect(res.statusCode).toBe(500);
@@ -42,7 +45,8 @@ describe('API Endpoint /api/weather-check', () => {
     });
 
     it('should return a 405 if HTTP method is not POST', async () => {
-        const res = await testHandler(handler, { method: 'GET' });
+        const { req, res } = createHandlerObjects({ method: 'GET' });
+        await handlerWeatherCheck(req, res);
 
         expect(res.statusCode).toBe(405);
         expect(res._getJSONData()).toEqual({
