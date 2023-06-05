@@ -4,14 +4,14 @@ on:
   workflow_call:
     outputs:
       database_url_encrypted:
-        value: ${{ jobs.create-database-branch.outputs.database_url }}
+        value: ${{ jobs.create-database-branch.outputs.database_url_encrypted }}
 
 jobs:
   create-database-branch:
     runs-on: ubuntu-latest
 
     outputs:
-      database_url_encrypted: ${{ steps.encrypt_database_url.outputs.database_url_encrypted }}
+      database_url_encrypted: ${{ steps.encrypt-database-url.outputs.database_url_encrypted }}
 
     env:
       PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Extract branch name
-        id: branch_name
+        id: branch-name
         uses: tj-actions/branch-names@v7
 
       - name: Create database branch
@@ -28,22 +28,21 @@ jobs:
         with:
           org_name: 'niklas-wilhelm'
           database_name: 'sqs-project-weather-check'
-          branch_name: '${{ github.run_id }}--${{ steps.branch_name.outputs.current_branch }}'
+          branch_name: '${{ github.run_id }}--${{ steps.branch-name.outputs.current_branch }}'
           from: 'main'
 
       - name: Create database branch credentials
         uses: planetscale/create-branch-password-action@v1
-        id: create_database_credentials
+        id: create-database-credentials
         with:
           org_name: 'niklas-wilhelm'
           database_name: 'sqs-project-weather-check'
-          branch_name: '${{ steps.branch_name.outputs.current_branch }}--${{ github.run_id }}'
-          name: 'pass-${{ steps.branch_name.outputs.current_branch }}--${{ github.run_id }}'
+          branch_name: '${{ github.run_id }}--${{ steps.branch-name.outputs.current_branch }}'
+          name: 'pass-${{ github.run_id }}--${{ steps.branch-name.outputs.current_branch }}'
 
       - name: Encrypt database url
-        id: encrypt_database_url
+        id: encrypt-database-url
         run: |
-          database_url="mysql://${{ steps.create_database_credentials.outputs.username }}:${{ steps.create_database_credentials.outputs.password }}@${{ steps.create_database_credentials.outputs.hostname }}/sqs-project-weather-check?sslaccept=strict"
-          echo "::add-mask::$database_url"
+          database_url="mysql://${{ steps.create-database-credentials.outputs.username }}:${{ steps.create-database-credentials.outputs.password }}@${{ steps.create-database-credentials.outputs.hostname }}/sqs-project-weather-check?sslaccept=strict"
           database_url_encrypted=$(gpg --symmetric --batch --passphrase "$GPG_PASSPHRASE" --output - <(echo "$database_url") | base64 -w0)
-          echo "::set-output name=database_url_encrypted::$database_url_encrypted"
+          echo "database_url_encrypted=$database_url_encrypted" >> $GITHUB_OUTPUT
