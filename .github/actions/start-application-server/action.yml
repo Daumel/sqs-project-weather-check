@@ -1,7 +1,9 @@
 name: Start Application Server Action
 
 inputs:
-  database_url:
+  database_url_encrypted:
+    required: true
+  gpg_passphrase:
     required: true
   api_key:
     required: true
@@ -12,10 +14,11 @@ runs:
     - name: Create .env file
       shell: bash
       run: |
-        DATABASE_URL=${{ inputs.database_url }}
-        API_KEY=${{ inputs.api_key }}
+        database_url=$(gpg --decrypt --quiet --batch --passphrase "${{ inputs.gpg_passphrase }}" --output - <(echo "${{ inputs.database_url_encrypted }}" | base64 --decode))
+        echo "::add-mask::$database_url"
+        api_key=${{ inputs.api_key }}
         
-        echo -e "DATABASE_URL=$DATABASE_URL\nAPI_KEY=$API_KEY" > .env
+        echo -e "DATABASE_URL=$database_url\nAPI_KEY=$api_key" > .env
 
     - name: Build application
       shell: bash

@@ -11,10 +11,11 @@ describe('API Endpoint /api/api-forecast ', () => {
             method: 'GET',
             query: { name: 'Reit im Winkl', lat: '47.6766357', lon: '12.4703473' },
         });
-        await handlerApiForecast(req, res);
+        handlerApiForecast(req, res);
 
         await waitForExpect(() => {
             const jsonData = JSON.parse(res._getData());
+            expect(res.statusCode).toBe(200);
             expect(jsonData.name).toBe('Reit im Winkl');
             expect(typeof jsonData.main.temp).toBe('number');
         });
@@ -25,7 +26,7 @@ describe('API Endpoint /api/api-forecast ', () => {
             method: 'GET',
             query: { name: 'Berlin', lat: 'invalid_latitude', lon: '13.3888599' },
         });
-        await handlerApiForecast(req, res);
+        handlerApiForecast(req, res);
 
         await waitForExpect(() => {
             expect(res.statusCode).toBe(500);
@@ -38,7 +39,7 @@ describe('API Endpoint /api/api-forecast ', () => {
             method: 'GET',
             query: { name: 'Berlin', lat: '47.6766357', lon: 'invalid_longitude' },
         });
-        await handlerApiForecast(req, res);
+        handlerApiForecast(req, res);
 
         await waitForExpect(() => {
             expect(res.statusCode).toBe(500);
@@ -48,11 +49,13 @@ describe('API Endpoint /api/api-forecast ', () => {
 
     it('should return a 405 if HTTP method is not GET', async () => {
         const { req, res } = createHandlerObjects({ method: 'POST' });
-        await handlerApiForecast(req, res);
+        handlerApiForecast(req, res);
 
-        expect(res.statusCode).toBe(405);
-        expect(JSON.parse(res._getData())).toEqual({
-            error: 'Only GET requests are allowed',
+        await waitForExpect(() => {
+            expect(res.statusCode).toBe(405);
+            expect(JSON.parse(res._getData())).toEqual({
+                error: 'Only GET requests are allowed',
+            });
         });
     });
 });
