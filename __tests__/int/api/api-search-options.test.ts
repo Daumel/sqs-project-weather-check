@@ -11,10 +11,11 @@ describe('API Endpoint /api/api-search-options', () => {
             method: 'GET',
             query: { term: 'Geretsried' },
         });
-        await handlerApiSearchOptions(req, res);
+        handlerApiSearchOptions(req, res);
 
         await waitForExpect(() => {
             const jsonData = res._getJSONData();
+            expect(res.statusCode).toBe(200);
             expect(jsonData[0].name).toBe('Geretsried');
             expect(jsonData[0].country).toBe('DE');
         });
@@ -25,7 +26,7 @@ describe('API Endpoint /api/api-search-options', () => {
             method: 'GET',
             query: { term: '' },
         });
-        await handlerApiSearchOptions(req, res);
+        handlerApiSearchOptions(req, res);
 
         await waitForExpect(() => {
             expect(res.statusCode).toBe(500);
@@ -35,11 +36,13 @@ describe('API Endpoint /api/api-search-options', () => {
 
     it('should return a 405 if HTTP method is not GET', async () => {
         const { req, res } = createHandlerObjects({ method: 'POST' });
-        await handlerApiSearchOptions(req, res);
+        handlerApiSearchOptions(req, res);
 
-        expect(res.statusCode).toBe(405);
-        expect(res._getJSONData()).toEqual({
-            error: 'Only GET requests are allowed',
+        await waitForExpect(() => {
+            expect(res.statusCode).toBe(405);
+            expect(res._getJSONData()).toEqual({
+                error: 'Only GET requests are allowed',
+            });
         });
     });
 });

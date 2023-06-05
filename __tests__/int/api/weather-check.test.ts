@@ -11,9 +11,10 @@ describe('API Endpoint /api/weather-check', () => {
             method: 'POST',
             body: { name: 'Berlin', temp: 25 },
         });
-        await handlerWeatherCheck(req, res);
+        handlerWeatherCheck(req, res);
 
         await waitForExpect(() => {
+            expect(res.statusCode).toBe(200);
             expect(res._getJSONData()).toEqual({ message: 'Created WeatherCheck entry successfully' });
         });
     });
@@ -23,7 +24,7 @@ describe('API Endpoint /api/weather-check', () => {
             method: 'POST',
             body: { name: 'Berlin' },
         });
-        await handlerWeatherCheck(req, res);
+        handlerWeatherCheck(req, res);
 
         await waitForExpect(() => {
             expect(res.statusCode).toBe(500);
@@ -36,7 +37,7 @@ describe('API Endpoint /api/weather-check', () => {
             method: 'POST',
             body: { temp: 25 },
         });
-        await handlerWeatherCheck(req, res);
+        handlerWeatherCheck(req, res);
 
         await waitForExpect(() => {
             expect(res.statusCode).toBe(500);
@@ -46,11 +47,13 @@ describe('API Endpoint /api/weather-check', () => {
 
     it('should return a 405 if HTTP method is not POST', async () => {
         const { req, res } = createHandlerObjects({ method: 'GET' });
-        await handlerWeatherCheck(req, res);
+        handlerWeatherCheck(req, res);
 
-        expect(res.statusCode).toBe(405);
-        expect(res._getJSONData()).toEqual({
-            error: 'Only POST requests are allowed',
+        await waitForExpect(() => {
+            expect(res.statusCode).toBe(405);
+            expect(res._getJSONData()).toEqual({
+                error: 'Only POST requests are allowed',
+            });
         });
     });
 });

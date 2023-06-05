@@ -19,7 +19,7 @@ describe('API Endpoint /api/weather-checks', () => {
             method: 'POST',
             body: testEntry,
         });
-        await handlerWeatherCheck(reqPost, resPost);
+        handlerWeatherCheck(reqPost, resPost);
 
         await waitForExpect(() => {
             expect(resPost._getStatusCode()).toBe(200);
@@ -28,7 +28,7 @@ describe('API Endpoint /api/weather-checks', () => {
         const { req: reqGet, res: resGet } = createHandlerObjects({
             method: 'GET',
         });
-        await handlerWeatherChecks(reqGet, resGet);
+        handlerWeatherChecks(reqGet, resGet);
 
         await waitForExpect(() => {
             const jsonData = JSON.parse(resGet._getData());
@@ -36,16 +36,19 @@ describe('API Endpoint /api/weather-checks', () => {
                 return entry.name === testEntry.name && entry.temp === testEntry.temp;
             });
             expect(matchingEntry).toBeDefined();
+            expect(resGet._getStatusCode()).toBe(200);
         });
     });
 
     it('should return a 405 if HTTP method is not GET', async () => {
         const { req, res } = createHandlerObjects({ method: 'POST' });
-        await handlerWeatherChecks(req, res);
+        handlerWeatherChecks(req, res);
 
-        expect(res.statusCode).toBe(405);
-        expect(res._getJSONData()).toEqual({
-            error: 'Only GET requests are allowed',
+        await waitForExpect(() => {
+            expect(res.statusCode).toBe(405);
+            expect(res._getJSONData()).toEqual({
+                error: 'Only GET requests are allowed',
+            });
         });
     });
 });
