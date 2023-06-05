@@ -34,14 +34,14 @@ jobs:
           node-version: 18
 
       - name: Get yarn cache directory path
-        id: yarn_cache_dir_path
-        run: echo "::set-output name=cache-dir::$(yarn cache dir)"
+        id: yarn-cache-dir-path
+        run: echo "cache-dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
       - name: Restore cache
-        id: restore_cache
+        id: restore-cache
         uses: actions/cache/restore@v3
         with:
-          path: ${{ steps.yarn_cache_dir_path.outputs.cache-dir }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.cache-dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
@@ -53,7 +53,7 @@ jobs:
       - name: Start application server
         uses: ./.github/actions/start-application-server
         with:
-          database_url_encrpyted: ${{ needs.create-database-branch.outputs.database_url_encrypted }}
+          database_url_encrypted: ${{ needs.create-database-branch.outputs.database_url_encrypted }}
           gpg_passphrase: ${{ env.GPG_PASSPHRASE }}
           api_key: ${{ env.API_KEY }}
 
@@ -73,11 +73,11 @@ jobs:
           SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
 
       - name: Cache dependencies
-        if: steps.restore_cache.outputs.cache-hit != 'true'
+        if: steps.restore-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v3
         with:
-          path: ${{ steps.yarn_cache_dir_path.outputs.cache-dir }}
-          key: ${{ steps.restore_cache.outputs.cache-primary-key }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.cache-dir }}
+          key: ${{ steps.restore-cache.outputs.cache-primary-key }}
 
   delete-database-branch:
     needs: [create-database-branch, check-code-quality]

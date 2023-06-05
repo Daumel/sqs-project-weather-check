@@ -15,8 +15,10 @@ runs:
       shell: bash
       run: |
         database_url=$(gpg --decrypt --quiet --batch --passphrase "${{ inputs.gpg_passphrase }}" --output - <(echo "${{ inputs.database_url_encrypted }}" | base64 --decode))
-        echo "::add-mask::$database_url"
         api_key=${{ inputs.api_key }}
+        
+        echo "::add-mask::$database_url"
+        echo "::add-mask::$api_key"
         
         echo -e "DATABASE_URL=$database_url\nAPI_KEY=$api_key" > .env
 
