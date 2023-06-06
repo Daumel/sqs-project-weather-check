@@ -70,7 +70,7 @@ jobs:
         run: yarn depcruise src --include-only "^src"
 
       - name: Create ESLint report
-        run: yarn lint -f sonarqube -o ./eslint_report.json
+        run: yarn eslint -f sonarqube -o ./eslint_report.json
 
       - name: Check Quality Gate
         uses: SonarSource/sonarcloud-github-action@master
