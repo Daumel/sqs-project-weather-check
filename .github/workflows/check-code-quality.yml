@@ -1,5 +1,7 @@
 name: Check Code Quality Job
 
+if: ${{ github.actor != 'dependabot[bot]' }}
+
 on:
   push:
     branches:
