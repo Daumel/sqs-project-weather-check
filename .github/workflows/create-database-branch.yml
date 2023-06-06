@@ -36,7 +36,7 @@ jobs:
           from: ${{ env.PLANETSCALE_BASE_BRANCH }}
 
       - name: Create database branch credentials
-        uses: planetscale/create-branch-password-action@v1
+        uses: planetscale/create-branch-password-action@v3
         id: create-database-credentials
         with:
           org_name: ${{ env.PLANETSCALE_ORG_NAME }}
