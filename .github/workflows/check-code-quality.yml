@@ -47,9 +47,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Check formatting
-        run: yarn prettier
-
       - name: Start application server
         uses: ./.github/actions/start-application-server
         with:
@@ -58,10 +55,16 @@ jobs:
           api_key: ${{ env.API_KEY }}
 
       - name: Run unit and integration tests
-        run: yarn jest --coverage --silent
+        run: yarn jest --coverage
 
       - name: Run end-to-end tests
         run: yarn cypress run --record false
+
+      - name: Run formatting tests
+        run: yarn prettier --check src
+
+      - name: Run architecture tests
+        run: yarn depcruise src --include-only "^src"
 
       - name: Create ESLint report
         run: yarn lint -f sonarqube -o ./eslint_report.json

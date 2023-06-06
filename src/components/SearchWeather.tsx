@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { IForecast, ISearchOption } from '@/src/interfaces';
-import Suggestions from './Suggestions';
+import Suggestions from '@/src/components/Suggestions';
 import axios from 'axios';
 import styles from '@/src/styles/SearchWeather.module.css';
 
