@@ -36,7 +36,7 @@
         "cypress": "^12.3.0",
         "dependency-cruiser": "^13.0.3",
         "eslint": "8.38.0",
-        "eslint-config-next": "13.3.0",
+        "eslint-config-next": "13.4.4",
         "eslint-config-prettier": "^8.8.0",
         "eslint-formatter-sonarqube": "^1.0.0",
         "eslint-plugin-jsx-a11y": "^6.7.1",
