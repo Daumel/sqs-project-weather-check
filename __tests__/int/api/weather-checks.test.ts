@@ -22,7 +22,7 @@ describe('API Endpoint /api/weather-checks', () => {
         handlerWeatherCheck(reqPost, resPost);
 
         await waitForExpect(() => {
-            expect(resPost._getStatusCode()).toBe(200);
+            expect(resPost._getJSONData()).toEqual({ message: 'Created WeatherCheck entry successfully' });
         });
 
         const { req: reqGet, res: resGet } = createHandlerObjects({
