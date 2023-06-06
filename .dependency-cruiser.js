@@ -11,6 +11,15 @@ module.exports = {
             },
         },
         {
+            name: 'not-to-deprecated',
+            severity: 'warn',
+            comment: 'This module uses a version of a package that has been deprecated',
+            from: {},
+            to: {
+                dependencyTypes: ['deprecated'],
+            },
+        },
+        {
             name: 'no-duplicate-dep-types',
             severity: 'warn',
             comment: 'This module depends on an external package that occurs more than once in the package.json',
