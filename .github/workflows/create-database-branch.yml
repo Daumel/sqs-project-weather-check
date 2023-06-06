@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Create database branch
-        uses: planetscale/create-branch-action@v1
+        uses: planetscale/create-branch-action@v2
         with:
           org_name: ${{ env.PLANETSCALE_ORG_NAME }}
           database_name: ${{ env.PLANETSCALE_DB_NAME }}
