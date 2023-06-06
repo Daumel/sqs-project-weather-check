@@ -2,6 +2,11 @@ name: Create Database Branch Job
 
 on:
   workflow_call:
+    inputs:
+      branch_name:
+        required: true
+        type: string
+
     outputs:
       database_url_encrypted:
         value: ${{ jobs.create-database-branch.outputs.database_url_encrypted }}
@@ -14,31 +19,30 @@ jobs:
       database_url_encrypted: ${{ steps.encrypt-database-url.outputs.database_url_encrypted }}
 
     env:
-      PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+      PLANETSCALE_BASE_BRANCH: 'main'
+      PLANETSCALE_ORG_NAME: 'niklas-wilhelm'
+      PLANETSCALE_DB_NAME: 'sqs-project-weather-check'
       PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+      PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
       GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
     steps:
-      - name: Extract branch name
-        id: branch-name
-        uses: tj-actions/branch-names@v7
-
       - name: Create database branch
         uses: planetscale/create-branch-action@v1
         with:
-          org_name: 'niklas-wilhelm'
-          database_name: 'sqs-project-weather-check'
-          branch_name: '${{ github.run_id }}--${{ steps.branch-name.outputs.current_branch }}'
-          from: 'main'
+          org_name: ${{ env.PLANETSCALE_ORG_NAME }}
+          database_name: ${{ env.PLANETSCALE_DB_NAME }}
+          branch_name: ${{ inputs.branch_name }}
+          from: ${{ env.PLANETSCALE_BASE_BRANCH }}
 
       - name: Create database branch credentials
         uses: planetscale/create-branch-password-action@v1
         id: create-database-credentials
         with:
-          org_name: 'niklas-wilhelm'
-          database_name: 'sqs-project-weather-check'
-          branch_name: '${{ github.run_id }}--${{ steps.branch-name.outputs.current_branch }}'
-          name: 'pass-${{ github.run_id }}--${{ steps.branch-name.outputs.current_branch }}'
+          org_name: ${{ env.PLANETSCALE_ORG_NAME }}
+          database_name: ${{ env.PLANETSCALE_DB_NAME }}
+          branch_name: ${{ inputs.branch_name }}
+          name: 'pass-${{ inputs.branch_name }}'
 
       - name: Encrypt database url
         id: encrypt-database-url
