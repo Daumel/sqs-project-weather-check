@@ -21,6 +21,7 @@ jobs:
 
     env:
       API_KEY: ${{ secrets.API_KEY }}
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
@@ -50,6 +51,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Check formatting
+        run: yarn prettier --check src
+
       - name: Start application server
         uses: ./.github/actions/start-application-server
         with:
@@ -63,20 +67,24 @@ jobs:
       - name: Run end-to-end tests
         run: yarn cypress run --record false
 
-      - name: Run formatting tests
-        run: yarn prettier --check src
-
       - name: Run architecture tests
         run: yarn depcruise src --include-only "^src"
 
-      - name: Create ESLint report
-        run: yarn eslint -f sonarqube -o ./eslint_report.json
+      - name: Perform Snyk vulnerabilities scan
+        uses: ./.github/actions/snyk-vulnerabilities-scan
+        with:
+          snyk_token: ${{ env.SNYK_TOKEN }}
 
-      - name: Check Quality Gate
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+      - name: Perform ZAP scan
+        uses: zaproxy/action-full-scan@v0.4.0
+        with:
+          target: 'http://127.0.0.1:3000/'
+
+      - name: Quality Gate
+        uses: ./.github/actions/quality-gate
+        with:
+          github_token: ${{ env.GITHUB_TOKEN }}
+          sonar_token: ${{ env.SONAR_TOKEN }}
 
       - name: Cache dependencies
         if: steps.restore-cache.outputs.cache-hit != 'true'

@@ -9,8 +9,8 @@
         "test:unit": "jest --testPathPattern=__tests__/unit",
         "test:integration": "jest --testPathPattern=__tests__/int",
         "test:e2e": "cypress run",
-        "test:formatting": "prettier --check src",
-        "test:architecture": "depcruise src --include-only \"^src\""
+        "test:architecture": "depcruise src --include-only \"^src\"",
+        "test:formatting": "prettier --check src"
     },
     "dependencies": {
         "@prisma/client": "^4.12.0",

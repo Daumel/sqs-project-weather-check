@@ -1,0 +1,20 @@
+name: Quality Gate Action
+
+inputs:
+  github_token:
+    required: true
+  sonar_token:
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Create ESLint report
+      shell: bash
+      run: yarn eslint -f sonarqube -o ./eslint_report.json
+
+    - name: Quality Gate
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        SONAR_TOKEN: ${{ inputs.sonar_token }}

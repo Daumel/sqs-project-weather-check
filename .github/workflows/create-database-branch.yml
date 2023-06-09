@@ -19,7 +19,7 @@ jobs:
       database_url_encrypted: ${{ steps.encrypt-database-url.outputs.database_url_encrypted }}
 
     env:
-      PLANETSCALE_BASE_BRANCH: 'main'
+      PLANETSCALE_BASE_BRANCH: 'production'
       PLANETSCALE_ORG_NAME: 'niklas-wilhelm'
       PLANETSCALE_DB_NAME: 'sqs-project-weather-check'
       PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
