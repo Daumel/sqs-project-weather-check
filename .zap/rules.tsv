@@ -1,2 +1,2 @@
 90034	IGNORE	(Cloud Metadata Potentially Exposed)
-10055   IGNORE  (CSP: Wildcard Directive)
+10055	IGNORE	(CSP: Wildcard Directive)
