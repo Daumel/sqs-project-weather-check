@@ -32,5 +32,5 @@ runs:
         timeout 180 bash -c 'yarn start &
         until curl --silent --head http://127.0.0.1:3000 | grep "200 OK"; do
           echo "Waiting for application server..."
-          sleep 5
+          sleep 3
         done'
