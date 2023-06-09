@@ -70,10 +70,11 @@ jobs:
       - name: Run architecture tests
         run: yarn depcruise src --include-only "^src"
 
-      - name: Perform Snyk vulnerabilities scan
-        uses: ./.github/actions/snyk-vulnerabilities-scan
+      - name: Perform ZAP scan
+        uses: zaproxy/action-full-scan@v0.4.0
         with:
-          snyk_token: ${{ env.SNYK_TOKEN }}
+          target: 'http://127.0.0.1:3000/'
+          rules_file_name: '.zap/rules.tsv'
 
       - name: Quality Gate
         uses: ./.github/actions/quality-gate
