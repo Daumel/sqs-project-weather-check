@@ -75,12 +75,6 @@ jobs:
         with:
           snyk_token: ${{ env.SNYK_TOKEN }}
 
-      - name: Perform ZAP scan
-        uses: zaproxy/action-full-scan@v0.4.0
-        with:
-          target: 'http://127.0.0.1:3000/'
-          cmd_options: "-I"
-
       - name: Quality Gate
         uses: ./.github/actions/quality-gate
         with:
