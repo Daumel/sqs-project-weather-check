@@ -70,6 +70,11 @@ jobs:
       - name: Run architecture tests
         run: yarn depcruise src --include-only "^src"
 
+      - name: Run stress test
+        uses: grafana/k6-action@v0.3.0
+        with:
+          filename: '__tests__/k6/stress-test.js'
+
       - name: Perform ZAP scan
         uses: zaproxy/action-full-scan@v0.4.0
         with:

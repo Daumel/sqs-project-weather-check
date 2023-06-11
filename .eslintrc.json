@@ -4,5 +4,8 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:jsx-a11y/recommended",
         "prettier"
-    ]
+    ],
+    "rules": {
+        "import/no-anonymous-default-export": "off"
+    }
 }
