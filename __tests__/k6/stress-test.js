@@ -15,7 +15,7 @@ export const options = {
         loadimpact: {
             projectID: 3645223,
             distribution: {
-                'amazon:eu:frankfurt': { loadZone: 'amazon:eu:frankfurt', percent: 50 },
+                'amazon:de:frankfurt': { loadZone: 'amazon:de:frankfurt', percent: 50 },
                 'amazon:gb:london': { loadZone: 'amazon:gb:london', percent: 50 },
             },
         },
