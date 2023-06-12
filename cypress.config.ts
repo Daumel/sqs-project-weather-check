@@ -9,6 +9,10 @@ export default defineConfig({
         specPattern: '**/*.feature',
         videosFolder: '__tests__/e2e/videos',
         screenshotsFolder: '__tests__/e2e/screenshots',
+        retries: {
+            runMode: 2,
+            openMode: 0,
+        },
         async setupNodeEvents(on, config) {
             await preprocessor.addCucumberPreprocessorPlugin(on, config);
             const options = {
