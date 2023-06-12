@@ -14,10 +14,16 @@ Feature: Checking weather for a city
     And I click the search button
     Then no weather forecast should be displayed
 
+  Scenario: Searching for multiple cities in a row
+    When I type "Reit im Winkl" into the search field
+    Then a city with the name "Reit im Winkl" should be suggested
+    When I type "Berlin" into the search field
+    Then a city with the name "Berlin" should be suggested
+
   Scenario: Searching for suggestions with a search term of less than three characters
     When I type "Be" into the search field
-    Then no suggestions should be displayed
+    Then no cities should be suggested
 
   Scenario: Searching for suggestions using a non-existent city
     When I type "jkhdashfjdfkj" into the search field
-    Then no suggestions should be displayed
+    Then no cities should be suggested
