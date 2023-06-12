@@ -1,4 +1,5 @@
 import { IForecast } from '@/src/interfaces';
+import { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
 import SearchWeather from '@/src/components/SearchWeather';
 import Forecast from '@/src/components/Forecast';
@@ -7,7 +8,7 @@ import styles from '@/src/styles/Home.module.css';
 
 const WEATHER_CHECK_POST_URL = '/api/weather-check';
 
-const WeatherCheck = (): JSX.Element => {
+const WeatherCheck = (): ReactElement => {
     const [forecast, setForecast] = useState<IForecast | null>(null);
 
     const createWeatherCheck = (forecast: IForecast) => {

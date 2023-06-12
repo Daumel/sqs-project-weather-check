@@ -1,4 +1,5 @@
 import { ISearchOption } from '@/src/interfaces';
+import { ReactElement } from 'react';
 import styles from '@/src/styles/Suggestions.module.css';
 
 type Props = {
@@ -6,7 +7,7 @@ type Props = {
     setCity: (option: ISearchOption) => void;
 };
 
-const Suggestions = ({ searchOptions, setCity }: Props): JSX.Element => (
+const Suggestions = ({ searchOptions, setCity }: Props): ReactElement => (
     <ul className={styles.suggestionList}>
         {searchOptions?.map((searchOption: ISearchOption) => (
             <li key={`${searchOption.name}-${searchOption.lat}-${searchOption.lon}`} className={styles.suggestionItem}>
