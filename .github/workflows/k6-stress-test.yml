@@ -27,3 +27,4 @@ jobs:
           filename: __tests__/k6/stress-test.js
         env:
           HOSTNAME: ${{ inputs.hostname }}
+          K6_CLOUD_PROJECT_ID: ${{ secrets.K6_CLOUD_PROJECT_ID }}
