@@ -8,8 +8,17 @@ export const options = {
         { duration: '1m', target: 0 },
     ],
     thresholds: {
-        http_req_duration: ['p(95)<750'],
+        http_req_duration: ['p(95)<500'],
         checks: ['rate>0.99'],
+    },
+    ext: {
+        loadimpact: {
+            projectID: 3645223,
+            distribution: {
+                'amazon:eu:frankfurt': { loadZone: 'amazon:eu:frankfurt', percent: 50 },
+                'amazon:gb:london': { loadZone: 'amazon:gb:london', percent: 50 },
+            },
+        },
     },
 };
 
