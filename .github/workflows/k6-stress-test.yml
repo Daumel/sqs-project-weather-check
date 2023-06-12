@@ -8,9 +8,6 @@ on:
         type: string
         default: 'https://sqs-project-weather-check.vercel.app'
 
-  schedule:
-    - cron: '0 3 * * *'
-
 jobs:
   k6-stress-test:
     runs-on: ubuntu-latest
