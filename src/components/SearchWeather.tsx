@@ -1,4 +1,5 @@
 import { useState, useEffect, ChangeEvent } from 'react';
+import { ReactElement } from 'react';
 import { IForecast, ISearchOption } from '@/src/interfaces';
 import Suggestions from '@/src/components/Suggestions';
 import axios from 'axios';
@@ -11,7 +12,7 @@ type Props = {
     setForecast: (option: IForecast) => void;
 };
 
-const SearchWeather = ({ setForecast }: Props): JSX.Element => {
+const SearchWeather = ({ setForecast }: Props): ReactElement => {
     const [rawSearchTerm, setRawSearchTerm] = useState('');
     const [searchOptions, setSearchOptions] = useState<ISearchOption[] | null>(null);
     const [city, setCity] = useState<ISearchOption | null>(null);

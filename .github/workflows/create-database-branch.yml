@@ -25,6 +25,7 @@ jobs:
       PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
       PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
       GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      BRANCH_NAME: ${{ inputs.branch_name }}
 
     steps:
       - name: Create database branch
@@ -32,7 +33,7 @@ jobs:
         with:
           org_name: ${{ env.PLANETSCALE_ORG_NAME }}
           database_name: ${{ env.PLANETSCALE_DB_NAME }}
-          branch_name: ${{ inputs.branch_name }}
+          branch_name: ${{ env.BRANCH_NAME }}
           from: ${{ env.PLANETSCALE_BASE_BRANCH }}
 
       - name: Create database branch credentials
@@ -41,8 +42,8 @@ jobs:
         with:
           org_name: ${{ env.PLANETSCALE_ORG_NAME }}
           database_name: ${{ env.PLANETSCALE_DB_NAME }}
-          branch_name: ${{ inputs.branch_name }}
-          name: 'pass-${{ inputs.branch_name }}'
+          branch_name: ${{ env.BRANCH_NAME }}
+          name: 'pass-${{ env.BRANCH_NAME }}'
 
       - name: Encrypt database url
         id: encrypt-database-url

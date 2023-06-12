@@ -1,0 +1,29 @@
+name: K6 Stress Test Job
+
+on:
+  workflow_dispatch:
+    inputs:
+      hostname:
+        required: true
+        type: string
+        default: 'https://sqs-project-weather-check.vercel.app'
+
+  schedule:
+    - cron: '0 3 * * *'
+
+jobs:
+  k6-stress-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run k6 stress test
+        uses: grafana/k6-action@v0.3.0
+        with:
+          cloud: true
+          token: ${{ secrets.K6_CLOUD_API_TOKEN }}
+          filename: __tests__/k6/stress-test.js
+        env:
+          HOSTNAME: ${{ inputs.hostname }}

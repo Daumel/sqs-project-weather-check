@@ -1,7 +1,8 @@
 import Head from 'next/head';
+import { ReactElement } from 'react';
 import WeatherCheck from '@/src/components/WeatherCheck';
 
-const Root = (): JSX.Element => (
+const Root = (): ReactElement => (
     <>
         <Head>
             <title>Weather Check</title>
