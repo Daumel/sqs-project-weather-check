@@ -46,7 +46,7 @@ describe('API Endpoint /api/api-forecast ', () => {
 
         expect(res.statusCode).toBe(405);
         expect(JSON.parse(res._getData())).toEqual({
-            error: 'Only GET requests are allowed',
+            error: 'Invalid request type. Only GET requests are allowed',
         });
     });
 });
