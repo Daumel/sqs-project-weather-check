@@ -28,6 +28,10 @@ Then('no weather forecast should be displayed', function () {
     ForecastPage.checkIfNoForecastIsDisplayed();
 });
 
-Then('no suggestions should be displayed', function () {
-    SearchWeatherPage.checkIfNoSuggestionsAreDisplayed();
+Then('a city with the name {string} should be suggested', function (city) {
+    SearchWeatherPage.checkIfSpecificCityIsSuggested(city.toString());
+});
+
+Then('no cities should be suggested', function () {
+    SearchWeatherPage.checkIfNoCitiesAreSuggested();
 });
