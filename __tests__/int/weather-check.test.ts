@@ -44,7 +44,7 @@ describe('API Endpoint /api/weather-check', () => {
 
         expect(res.statusCode).toBe(405);
         expect(res._getJSONData()).toEqual({
-            error: 'Only POST requests are allowed',
+            error: 'Invalid request type. Only POST requests are allowed',
         });
     });
 });

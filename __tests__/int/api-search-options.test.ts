@@ -35,7 +35,7 @@ describe('API Endpoint /api/api-search-options', () => {
 
         expect(res.statusCode).toBe(405);
         expect(res._getJSONData()).toEqual({
-            error: 'Only GET requests are allowed',
+            error: 'Invalid request type. Only GET requests are allowed',
         });
     });
 });
