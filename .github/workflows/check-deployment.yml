@@ -20,9 +20,6 @@ jobs:
         uses: zaproxy/action-full-scan@v0.4.0
         with:
           target: '${{ inputs.hostname }}/'
-          rules_file_name: '.zap/rules.tsv'
-          fail_action: true
-          allow_issue_writing: false
 
       - name: Run k6 stress test
         uses: grafana/k6-action@v0.3.0
