@@ -1,4 +1,4 @@
-name: K6 Stress Test Job
+name: Check Deployment Job
 
 on:
   workflow_dispatch:
@@ -9,12 +9,20 @@ on:
         default: 'https://sqs-project-weather-check.vercel.app'
 
 jobs:
-  k6-stress-test:
+  check-deployment:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Run ZAP scan
+        uses: zaproxy/action-full-scan@v0.4.0
+        with:
+          target: '${{ inputs.hostname }}/'
+          rules_file_name: '.zap/rules.tsv'
+          fail_action: true
+          allow_issue_writing: false
 
       - name: Run k6 stress test
         uses: grafana/k6-action@v0.3.0
