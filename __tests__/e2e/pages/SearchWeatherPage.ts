@@ -7,20 +7,20 @@ class SearchWeatherPage {
         cy.get('button').contains('Search').should('be.visible');
     }
 
-    static checkIfNoCitiesAreSuggested() {
+    static checkIfNoLocationsAreSuggested() {
         cy.get('li[class*="suggestionItem"]').should('not.exist');
     }
 
-    static checkIfSpecificCityIsSuggested(city: string) {
-        cy.get('li[class*="suggestionItem"]').contains(city).should('be.visible');
+    static checkIfSpecificLocationIsSuggested(location: string) {
+        cy.get('li[class*="suggestionItem"]').contains(location).should('be.visible');
     }
 
     static typeIntoSearchField(searchTerm: string) {
         cy.get('input[class*="searchTermInput"]').clear().type(searchTerm);
     }
 
-    static selectCityFromSuggestions(city: string) {
-        cy.get('li[class*="suggestionItem"]').contains(city).click();
+    static selectLocationFromSuggestions(location: string) {
+        cy.get('li[class*="suggestionItem"]').contains(location).click();
     }
 
     static clickSearchButton() {

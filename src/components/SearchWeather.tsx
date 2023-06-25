@@ -15,7 +15,7 @@ type Props = {
 const SearchWeather = ({ setForecast }: Props): ReactElement => {
     const [rawSearchTerm, setRawSearchTerm] = useState('');
     const [searchOptions, setSearchOptions] = useState<ISearchOption[] | null>(null);
-    const [city, setCity] = useState<ISearchOption | null>(null);
+    const [location, setLocation] = useState<ISearchOption | null>(null);
 
     const fetchSearchOptions = (searchTerm: string) => {
         axios
@@ -28,10 +28,10 @@ const SearchWeather = ({ setForecast }: Props): ReactElement => {
             });
     };
 
-    const fetchForecast = (city: ISearchOption) => {
+    const fetchForecast = (location: ISearchOption) => {
         axios
             .get<IForecast>(FORECAST_GET_URL, {
-                params: { name: city.name, lat: city.lat, lon: city.lon },
+                params: { name: location.name, lat: location.lat, lon: location.lon },
             })
             .then(response => {
                 setForecast(response.data);
@@ -51,18 +51,18 @@ const SearchWeather = ({ setForecast }: Props): ReactElement => {
     };
 
     const onSubmit = () => {
-        if (!city) {
+        if (!location) {
             return;
         }
-        fetchForecast(city);
+        fetchForecast(location);
     };
 
     useEffect(() => {
-        if (city) {
-            setRawSearchTerm(city.name);
+        if (location) {
+            setRawSearchTerm(location.name);
             setSearchOptions([]);
         }
-    }, [city]);
+    }, [location]);
 
     return (
         <section>
@@ -72,7 +72,7 @@ const SearchWeather = ({ setForecast }: Props): ReactElement => {
                     Search
                 </button>
             </div>
-            <Suggestions searchOptions={searchOptions} setCity={setCity} />
+            <Suggestions searchOptions={searchOptions} setLocation={setLocation} />
         </section>
     );
 };
