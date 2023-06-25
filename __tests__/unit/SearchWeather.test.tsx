@@ -7,10 +7,10 @@ import React from 'react';
 import { server } from '@/mocks/mswServer';
 
 jest.mock('../../src/components/Suggestions', () => {
-    return jest.fn(({ setCity }) => (
+    return jest.fn(({ setLocation: setLocation }) => (
         <ul>
             <li>
-                <button onClick={() => setCity(mockSearchOptionForBerlin)}>Mocked Search Option</button>
+                <button onClick={() => setLocation(mockSearchOptionForBerlin)}>Mocked Search Option</button>
             </li>
         </ul>
     ));
@@ -56,7 +56,7 @@ describe('SearchWeather', () => {
         await waitForNeverToHappen(() => expect(fetchSearchOptionsSpy).toHaveBeenCalled());
     });
 
-    it('fetches forecast when a city is selected and the search button is clicked', async () => {
+    it('fetches forecast when a location is selected and the search button is clicked', async () => {
         const fetchForecastSpy = jest.spyOn(axios, 'get');
 
         clickSuggestionButton();
@@ -65,7 +65,7 @@ describe('SearchWeather', () => {
         await waitFor(() => expect(fetchForecastSpy).toHaveBeenCalled());
     });
 
-    it('does not fetch forecast when no city is selected and the search button is clicked', async () => {
+    it('does not fetch forecast when no location is selected and the search button is clicked', async () => {
         const fetchForecastSpy = jest.spyOn(axios, 'get');
         clickSearchButton();
 

@@ -1,6 +1,9 @@
 name: Check Code Quality Job
 
 on:
+  schedule:
+    - cron: '0 2 * * *'
+
   push:
     branches:
       - main

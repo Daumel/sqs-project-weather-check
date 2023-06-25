@@ -48,14 +48,5 @@ export default function () {
 }
 
 export function teardown() {
-    const payload = JSON.stringify({
-        name: 'K6-Teststadt',
-    });
-    const params = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-
-    http.del(`${HOSTNAME}/api/weather-checks`, payload, params);
+    http.del(`${HOSTNAME}/api/weather-checks?name=K6-Teststadt`);
 }

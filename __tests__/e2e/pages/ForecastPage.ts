@@ -1,6 +1,6 @@
 class ForecastPage {
-    static checkIfForecastIsDisplayed(city: string) {
-        cy.get('div[class*="forecast"]').contains(city).should('be.visible');
+    static checkIfForecastIsDisplayed(location: string) {
+        cy.get('div[class*="forecast"]').contains(location).should('be.visible');
     }
 
     static checkIfNoForecastIsDisplayed() {

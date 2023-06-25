@@ -24,8 +24,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
             break;
         case 'DELETE':
-            const name = req.query.name as string;
-            logger.info('Deleting WeatherCheck entries');
+            const name = (req.query.name as string) ?? '';
+            logger.info(`Deleting WeatherCheck entries for ${name}`);
             try {
                 await prisma.weatherCheck.deleteMany({ where: { name: name } });
                 logger.info(DELETE_SUCCESS_MESSAGE);

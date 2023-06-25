@@ -1,0 +1,20 @@
+### Get weather forecast for Geretsried
+GET {{hostname}}/api/api-forecast?name=Geretsried&lat=47.8646925&lon=11.479351
+
+### Get locations that match the search term "Geretsried"
+GET {{hostname}}/api/api-search-options?term=Geretsried
+
+### Get all WeatherCheck entries
+GET {{hostname}}/api/weather-checks
+
+### Delete WeatherCheck entries that have "Geretsried" as a location
+DELETE {{hostname}}/api/weather-checks?name=Geretsried
+
+### Create WeatherCheck entry for Geretsried
+POST {{hostname}}/api/weather-check
+Content-Type: application/json
+
+{
+  "name": "Geretsried",
+  "temp": 25
+}
