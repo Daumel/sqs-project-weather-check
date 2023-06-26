@@ -1,4 +1,4 @@
-import { ISearchOption } from '@/src/interfaces';
+import { ISearchOption, IForecast } from '@/src/interfaces';
 import { ReactElement } from 'react';
 import styles from '@/src/styles/Suggestions.module.css';
 
