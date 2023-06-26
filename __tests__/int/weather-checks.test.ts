@@ -19,7 +19,7 @@ describe('API Endpoint /api/weather-checks', () => {
             body: testEntry,
         });
         await handlerWeatherCheck(reqPost, resPost);
-    }, 10000);
+    });
 
     it('should handle GET request', async () => {
         const { req: reqGet, res: resGet } = createHandlerObjects({

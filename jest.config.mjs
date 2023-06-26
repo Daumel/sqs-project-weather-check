@@ -7,6 +7,7 @@ const createJestConfig = nextJest({
 const config = {
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
     testEnvironment: 'jest-environment-jsdom',
+    testTimeout: 10000,
     testEnvironmentOptions: {
         url: 'http://127.0.0.1:3000',
     },
