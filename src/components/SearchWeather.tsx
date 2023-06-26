@@ -1,5 +1,4 @@
-import { useState, useEffect, ChangeEvent } from 'react';
-import { ReactElement } from 'react';
+import { useState, useEffect, ChangeEvent, ReactElement } from 'react';
 import { IForecast, ISearchOption } from '@/src/interfaces';
 import Suggestions from '@/src/components/Suggestions';
 import axios from 'axios';

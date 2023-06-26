@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 class SearchWeatherPage {
     static visit() {
         cy.visit('/');

@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 class ForecastPage {
     static checkIfForecastIsDisplayed(location: string) {
         cy.get('div[class*="forecast"]').contains(location).should('be.visible');

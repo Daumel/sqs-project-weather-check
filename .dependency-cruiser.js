@@ -35,6 +35,7 @@ module.exports = {
             comment: "This is an orphan module - it's likely not used anymore",
             from: {
                 orphan: true,
+                pathNot: ['_document\\.tsx'],
             },
             to: {},
         },

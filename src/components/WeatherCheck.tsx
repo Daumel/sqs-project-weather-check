@@ -1,6 +1,5 @@
 import { IForecast } from '@/src/interfaces';
-import { ReactElement } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ReactElement } from 'react';
 import SearchWeather from '@/src/components/SearchWeather';
 import Forecast from '@/src/components/Forecast';
 import axios from 'axios';
