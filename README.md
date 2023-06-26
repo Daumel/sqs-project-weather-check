@@ -42,7 +42,7 @@ Im Root-Verzeichnis des Projekts muss eine `.env`-Datei mit folgenden zwei Umgeb
 -   `DATABASE_URL`: Connection String zur Datenbank
 -   `API_Key`: API-Key für die OpenWeatherMap API
 
-Für das Ausprobieren der Anwendung können die Daten in der Keepass-Datei verwendet werden.
+Für das Ausprobieren der Anwendung können die Daten in der KeePass-Datei verwendet werden.
 
 ### 5. Anwendung starten
 
