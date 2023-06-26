@@ -10,7 +10,7 @@ type Props = {
 const Suggestions = ({ searchOptions, setLocation }: Props): ReactElement => (
     <ul className={styles.suggestionList}>
         {searchOptions?.map(searchOption => (
-            <li key={`${searchOption.name}-${searchOption.lat}-${searchOption.lon}`} className={styles.suggestionItem}>
+            <li className={styles.suggestionItem}>
                 <button onClick={() => setLocation(searchOption)} className={styles.suggestionButton}>
                     {searchOption.name}, {searchOption.country}
                 </button>
