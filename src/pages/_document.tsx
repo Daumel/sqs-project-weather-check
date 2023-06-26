@@ -21,6 +21,7 @@ export default class MyDocument extends Document {
             <Html>
                 <Head>
                     <meta httpEquiv="Content-Security-Policy" content={csp} />
+                    <title>Wetter Check</title>
                 </Head>
                 <body>
                     <Main />
