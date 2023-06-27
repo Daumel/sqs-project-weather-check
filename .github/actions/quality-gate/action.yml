@@ -11,7 +11,7 @@ runs:
   steps:
     - name: Create ESLint report
       shell: bash
-      run: yarn eslint -f sonarqube -o ./eslint_report.json
+      run: yarn eslint -f sonarqube -o ./eslint_report.json .
 
     - name: Quality Gate
       uses: SonarSource/sonarcloud-github-action@master
