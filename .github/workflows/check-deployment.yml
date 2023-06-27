@@ -4,16 +4,12 @@ on:
   schedule:
     - cron: '0 3 * * *'
 
-  workflow_dispatch:
-    inputs:
-      hostname:
-        required: true
-        type: string
-        default: 'https://sqs-project-weather-check.vercel.app'
-
 jobs:
   check-deployment:
     runs-on: ubuntu-latest
+
+    env:
+      HOSTNAME: 'https://sqs-project-weather-check.vercel.app'
 
     steps:
       - name: Checkout repository
@@ -22,7 +18,7 @@ jobs:
       - name: Run ZAP scan
         uses: zaproxy/action-full-scan@v0.4.0
         with:
-          target: '${{ inputs.hostname }}/'
+          target: '${{ env.HOSTNAME }}/'
 
       - name: Run k6 stress test
         uses: grafana/k6-action@v0.3.0
@@ -31,4 +27,4 @@ jobs:
           token: ${{ secrets.K6_CLOUD_API_TOKEN }}
           filename: __tests__/k6/stress-test.js
         env:
-          HOSTNAME: ${{ inputs.hostname }}
+          HOSTNAME: ${{ env.HOSTNAME }}
