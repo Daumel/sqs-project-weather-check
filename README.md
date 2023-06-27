@@ -2,6 +2,12 @@
 
 Bei dem Projekt _Weather Check_ handelt es sich um eine Next.js Anwendung, die das aktuelle Wetter für einen ausgewählten Ort abruft und anzeigt. Eine detaillierte Dokumentation des Projekts befindet sich im [Wiki](https://github.com/Daumel/sqs-project-weather-check/wiki).
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Daumel_sqs-project-weather-check&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Daumel_sqs-project-weather-check)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Daumel_sqs-project-weather-check&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Daumel_sqs-project-weather-check)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Daumel_sqs-project-weather-check&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=Daumel_sqs-project-weather-check)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Daumel_sqs-project-weather-check&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=Daumel_sqs-project-weather-check)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Daumel_sqs-project-weather-check&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Daumel_sqs-project-weather-check)
+
 ## Entwickler-Setup
 
 In diesem Abschnitt werden die notwendigen Schritte beschrieben, um die Anwendung lokal zu starten.
