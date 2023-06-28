@@ -131,6 +131,6 @@ Mithilfe des von IntelliJ bereitgestellten [HTTP Clients](https://www.jetbrains.
 
 ## Einrichtung eines Linters
 
-In der CI-Pipeline wird der Code zwar schon durch Tools wie SonarQube und ESLint geprüft. Es ist jedoch sinnvoll, auch lokal einen Linter einzurichten, um Fehler bereits während der Entwicklung zu erkennen.
+In der CI-Pipeline wird der Code zwar schon durch Tools wie SonarCloud und ESLint geprüft. Es ist jedoch sinnvoll, auch lokal einen Linter einzurichten, um Fehler bereits während der Entwicklung zu erkennen.
 In IntelliJ kann ESLint über die [Code Inspections](https://www.jetbrains.com/help/idea/code-inspection.html#access-inspections-and-settings) in wenigen Schritten aktiviert werden. Die IDE erkennt bei der
 Aktivierung der Einstellung automatisch die in diesem Projekt befindliche ESLint-Konfiguration (siehe `.eslintrc.json`) und passt das Linting dementsprechend an.
