@@ -13,7 +13,7 @@ export const options = {
     },
     ext: {
         loadimpact: {
-            projectID: 3645223,
+            projectID: 3648566,
             distribution: {
                 'amazon:de:frankfurt': { loadZone: 'amazon:de:frankfurt', percent: 100 },
             },
